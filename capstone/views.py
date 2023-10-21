@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
 from .models import User, Category, Input, Comment
@@ -63,16 +63,20 @@ def addBookmark(request, id):
 
 
 def displayCategory(request):
-    if request.method == "POST":
-        CategoryFromForm = request.POST['category']
-        category = Category.objects.get(categoryName=CategoryFromForm)
-        activeInput = Input.objects.filter(isActive = True, category=category)
-        allCategories = Category.objects.all()
-        return render(request, "capstone/index.html", {
+    category_name = request.GET.get('category')
+    if category_name:
+        category = get_object_or_404(Category, categoryName=category_name)
+        activeInput = Input.objects.filter(isActive=True, category=category)
+        return render(request, "capstone/displayCategory.html", {
             "input": activeInput,
-            "categories": allCategories
+            "categories": Category.objects.all()
         })
-
+    else:
+        return render(request, "capstone/displayCategory.html", {
+            "input": [],
+            "categories": Category.objects.all()
+        })
+    
 def createInput(request):
     if request.method == "GET":
         allCategories = Category.objects.all()

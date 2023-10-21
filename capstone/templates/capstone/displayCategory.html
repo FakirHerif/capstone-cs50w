@@ -1,0 +1,30 @@
+{% extends "capstone/layout.html" %}
+
+{% block body %}
+    <h2>Inputs</h2>
+    <form action="{% url 'displayCategory' %}" method="GET">
+        <label for="category">Select Category</label>
+        <select name="category" id="category">
+            <option value="">Select a Category</option>
+            {% for category in categories %}
+                <option value="{{ category.categoryName }}">{{ category.categoryName }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-warning">Select</button>
+    </form>
+
+    {% for input in input %}
+    <div class="row">
+        <div class="col-sm-6 col-md-4">
+          <div class="thumbnail">
+            <img src="https://cdn.pixabay.com/photo/2017/08/05/11/16/logo-2582748_640.png" alt="{{ input.title }}" style="width: 50px;">
+            <div class="caption">
+              <h3>{{ input.title }}</h3>
+              <p>{{ input.content }}</p>
+              <p><a href="{% url 'input' input.id %}" class="btn btn-primary" role="button">Button</a> <a href="{% url 'input' input.id %}" class="btn btn-default" role="button">Button</a></p>
+            </div>
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}
