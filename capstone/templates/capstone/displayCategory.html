@@ -21,7 +21,8 @@
             <div class="caption">
               <h3>{{ input.title }}</h3>
               <p>{{ input.content }}</p>
-              <p><a href="{% url 'input' input.id %}" class="btn btn-primary" role="button">Button</a> <a href="{% url 'input' input.id %}" class="btn btn-default" role="button">Button</a></p>
+              <p><a href="{% url 'input' id=input.id slug=input.title|slugify %}" class="btn btn-primary" role="button">Button</a>
+                <a href="{% url 'input' id=input.id slug=input.title|slugify %}" class="btn btn-default" role="button">Button</a></p>
             </div>
           </div>
         </div>

@@ -15,7 +15,7 @@ def index(request):
         "categories": allCategories
     })
 
-def input(request, id):
+def input(request, id, slug):
     inputData = Input.objects.get(pk=id)
     isInputInBookmark = request.user in inputData.bookmark.all()
     allComments = Comment.objects.filter(input=inputData)
@@ -26,7 +26,7 @@ def input(request, id):
     })
 
 
-def addComment(request, id):
+def addComment(request, id, slug):
     currentUser = request.user
     inputData = Input.objects.get(pk=id)
     message = request.POST['newComment']
@@ -39,7 +39,8 @@ def addComment(request, id):
 
     newComment.save()
 
-    return HttpResponseRedirect(reverse("input", args=(id, )))
+    return HttpResponseRedirect(reverse("input", args=(id, slug)))
+
 
 def displayBookmark(request):
     currentUser = request.user
@@ -48,17 +49,17 @@ def displayBookmark(request):
         "input": input
     })
 
-def removeBookmark(request, id):
+def removeBookmark(request, id, slug):
     inputData = Input.objects.get(pk=id)
     currentUser = request.user
     inputData.bookmark.remove(currentUser)
-    return HttpResponseRedirect(reverse("input", args=(id, )))
+    return HttpResponseRedirect(reverse("input", args=(id, slug)))
 
-def addBookmark(request, id):
+def addBookmark(request, id, slug):
     inputData = Input.objects.get(pk=id)
     currentUser = request.user
     inputData.bookmark.add(currentUser)
-    return HttpResponseRedirect(reverse("input", args=(id, )))
+    return HttpResponseRedirect(reverse("input", args=(id, slug)))
 
 
 
