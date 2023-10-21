@@ -10,6 +10,12 @@ from .models import User
 def index(request):
     return render(request, "capstone/index.html")
 
+def createInput(request):
+    if request.method == "GET":
+        return render(request, "capstone/create.html")
+
+
+
 
 def login_view(request):
     if request.method == "POST":
