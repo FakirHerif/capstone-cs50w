@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User
+from .models import User, Category, Input
 
 
 def index(request):
@@ -12,7 +12,28 @@ def index(request):
 
 def createInput(request):
     if request.method == "GET":
-        return render(request, "capstone/create.html")
+        allCategories = Category.objects.all()
+        return render(request, "capstone/create.html", {
+            "categories": allCategories
+        })
+    else:
+        title = request.POST["title"]
+        content = request.POST["content"]
+        url = request.POST["url"]
+        sites = request.POST["sites"]
+        category = request.POST["category"]
+        currentUser = request.user
+        newInput = Input(
+            title = title,
+            content = content,
+            url = url,
+            sites = sites,
+            category = category,
+            owner = currentUser
+        )
+        newInput.save()
+
+        return HttpResponseRedirect(reverse(index))
 
 
 
