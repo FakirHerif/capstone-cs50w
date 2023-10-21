@@ -12,5 +12,6 @@ urlpatterns = [
     path("input/<int:id>", views.input, name="input"),
     path("removeBookmark/<int:id>", views.removeBookmark, name="removeBookmark"),
     path("addBookmark/<int:id>", views.addBookmark, name="addBookmark"),
-    path("bookmark", views.displayBookmark, name="bookmark")
+    path("bookmark", views.displayBookmark, name="bookmark"),
+    path("addComment/<int:id>", views.addComment, name="addComment"),
 ]

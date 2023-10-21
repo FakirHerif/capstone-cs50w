@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Category, Input
+from .models import User, Category, Input, Comment
 
 
 def index(request):
@@ -18,11 +18,28 @@ def index(request):
 def input(request, id):
     inputData = Input.objects.get(pk=id)
     isInputInBookmark = request.user in inputData.bookmark.all()
+    allComments = Comment.objects.filter(input=inputData)
     return render(request, "capstone/input.html", {
         "input": inputData,
-        "isInputInBookmark": isInputInBookmark
+        "isInputInBookmark": isInputInBookmark,
+        "allComments": allComments
     })
 
+
+def addComment(request, id):
+    currentUser = request.user
+    inputData = Input.objects.get(pk=id)
+    message = request.POST['newComment']
+
+    newComment = Comment(
+        author = currentUser,
+        input = inputData,
+        message = message
+    )
+
+    newComment.save()
+
+    return HttpResponseRedirect(reverse("input", args=(id, )))
 
 def displayBookmark(request):
     currentUser = request.user
