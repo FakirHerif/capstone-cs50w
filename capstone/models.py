@@ -18,6 +18,7 @@ class Input(models.Model):
     sites = models.CharField(max_length=30)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="user")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, related_name="category")
+    isActive = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title

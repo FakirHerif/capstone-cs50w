@@ -8,7 +8,11 @@ from .models import User, Category, Input
 
 
 def index(request):
-    return render(request, "capstone/index.html")
+    activeInput = Input.objects.filter(isActive = True)
+    return render(request, "capstone/index.html", {
+        "input": activeInput
+    })
+
 
 def createInput(request):
     if request.method == "GET":
@@ -23,13 +27,17 @@ def createInput(request):
         sites = request.POST["sites"]
         category = request.POST["category"]
         currentUser = request.user
+
+        categoryData = Category.objects.get(categoryName = category)
+
+
         newInput = Input(
             title = title,
             content = content,
             url = url,
             sites = sites,
-            category = category,
-            owner = currentUser
+            category = categoryData,
+            owner = currentUser,
         )
         newInput.save()
 
