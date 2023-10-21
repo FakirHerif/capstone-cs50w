@@ -17,17 +17,23 @@ def index(request):
 
 def input(request, id):
     inputData = Input.objects.get(pk=id)
-    isInputInBookmark = False
+    isInputInBookmark = request.user in inputData.bookmark.all()
     return render(request, "capstone/input.html", {
         "input": inputData,
         "isInputInBookmark": isInputInBookmark
     })
 
 def removeBookmark(request, id):
-    return
+    inputData = Input.objects.get(pk=id)
+    currentUser = request.user
+    inputData.bookmark.remove(currentUser)
+    return HttpResponseRedirect(reverse("input", args=(id, )))
 
 def addBookmark(request, id):
-    return
+    inputData = Input.objects.get(pk=id)
+    currentUser = request.user
+    inputData.bookmark.add(currentUser)
+    return HttpResponseRedirect(reverse("input", args=(id, )))
 
 
 
