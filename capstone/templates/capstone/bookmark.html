@@ -1,0 +1,30 @@
+{% extends "capstone/layout.html" %}
+
+{% block body %}
+    <h2>Bookmarks</h2>
+    <form action="{% url 'displayCategory' %}" method="POST">
+       {% csrf_token %}
+       <label for="category">Select Category</label>
+            <select name="category" id="category">
+                {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-warning">Select</button>
+    </form>
+
+    <div class="row mx-1">
+    {% for input in input %}
+        <div class="media-left media-middle">
+          <a href="{% url 'input' id=input.id %}">
+            <img class="media-object" src="https://cdn.pixabay.com/photo/2017/08/05/11/16/logo-2582748_640.png" style="width: 50px;" alt="{{ input.title }}">
+          </a>
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading">{{ input.title }}</h4>
+          <h4 class="media-heading">{{ input.content }}</h4>
+          ---------------------------
+        </div>
+      </div>
+    {% endfor %}
+{% endblock %}

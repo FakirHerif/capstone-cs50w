@@ -23,6 +23,14 @@ def input(request, id):
         "isInputInBookmark": isInputInBookmark
     })
 
+
+def displayBookmark(request):
+    currentUser = request.user
+    input = currentUser.inputBookmark.all()
+    return render(request, "capstone/bookmark.html", {
+        "input": input
+    })
+
 def removeBookmark(request, id):
     inputData = Input.objects.get(pk=id)
     currentUser = request.user

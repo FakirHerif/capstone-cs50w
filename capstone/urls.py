@@ -11,5 +11,6 @@ urlpatterns = [
     path("displayCategory", views.displayCategory, name="displayCategory"),
     path("input/<int:id>", views.input, name="input"),
     path("removeBookmark/<int:id>", views.removeBookmark, name="removeBookmark"),
-    path("addBookmark/<int:id>", views.addBookmark, name="addBookmark")
+    path("addBookmark/<int:id>", views.addBookmark, name="addBookmark"),
+    path("bookmark", views.displayBookmark, name="bookmark")
 ]
