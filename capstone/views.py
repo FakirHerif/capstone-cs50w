@@ -9,10 +9,22 @@ from .models import User, Category, Input
 
 def index(request):
     activeInput = Input.objects.filter(isActive = True)
+    allCategories = Category.objects.all()
     return render(request, "capstone/index.html", {
-        "input": activeInput
+        "input": activeInput,
+        "categories": allCategories
     })
 
+def displayCategory(request):
+    if request.method == "POST":
+        CategoryFromForm = request.POST['category']
+        category = Category.objects.get(categoryName=CategoryFromForm)
+        activeInput = Input.objects.filter(isActive = True, category=category)
+        allCategories = Category.objects.all()
+        return render(request, "capstone/index.html", {
+            "input": activeInput,
+            "categories": allCategories
+        })
 
 def createInput(request):
     if request.method == "GET":
