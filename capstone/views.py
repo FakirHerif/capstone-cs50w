@@ -17,9 +17,18 @@ def index(request):
 
 def input(request, id):
     inputData = Input.objects.get(pk=id)
+    isInputInBookmark = False
     return render(request, "capstone/input.html", {
-        "input": inputData
+        "input": inputData,
+        "isInputInBookmark": isInputInBookmark
     })
+
+def removeBookmark(request, id):
+    return
+
+def addBookmark(request, id):
+    return
+
 
 
 def displayCategory(request):

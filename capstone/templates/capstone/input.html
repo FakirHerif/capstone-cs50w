@@ -1,10 +1,22 @@
+{% extends "capstone/layout.html" %}
+
 {% block body %}
 
-<div>
-    {% if user.is_authenticated %}
-
-    {% endif %}
-</div>
+    <div class="row">
+        {% if user.is_authenticated %}
+            {% if isInputInBookmark %}
+                <form action="{% url 'removeBookmark' id=input.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Remove Bookmark</button>
+                </form>
+            {% else %}
+                <form action="{% url 'addBookmark' id=input.id %}" method="POST">
+                {% csrf_token %}
+                    <button type="submit" class="btn btn-success">Add Bookmark</button>
+                </form>
+            {% endif %}
+        {% endif %}
+    </div>
 
     <h2>{{ input.title }}</h2>
     <p>{{ input.content }}</p>
