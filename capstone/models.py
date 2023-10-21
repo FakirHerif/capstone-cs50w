@@ -23,3 +23,11 @@ class Input(models.Model):
 
     def __str__(self):
         return self.title
+    
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="userComment")
+    input = models.ForeignKey(Input, on_delete=models.CASCADE, blank=True, null=True, related_name="inputComment")
+    message = models.CharField(max_length=400)
+
+    def __str__(self):
+        return f"{self.author} comment on {self.input}"
