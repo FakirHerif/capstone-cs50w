@@ -15,6 +15,13 @@ def index(request):
         "categories": allCategories
     })
 
+def input(request, id):
+    inputData = Input.objects.get(pk=id)
+    return render(request, "capstone/input.html", {
+        "input": inputData
+    })
+
+
 def displayCategory(request):
     if request.method == "POST":
         CategoryFromForm = request.POST['category']
