@@ -11,6 +11,7 @@
             </li>
         {% empty %}
             <p>Search Results Not Found...</p>
+            <a href="{% url 'create' %}">Click to create a new topic</a>
         {% endfor %}
     </ul>
 {% endblock %}
