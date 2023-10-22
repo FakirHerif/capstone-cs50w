@@ -17,12 +17,17 @@
             {% endif %}
         {% endif %}
     </div>
-
-    <h2>{{ input.title }}</h2>
+    <div class="row mx-1">
+        {% if input.category.categoryImage %}
+        <img src="{{ input.category.categoryImage.url }}" alt="{{ input.category.categoryName }}" style="width: 50px;">
+        {% endif %}
+        <h2>{{ input.title }}</h2>
+    </div>
     <p>{{ input.content }}</p>
-    <h5>Url: {{ input.url }}</h5>
     <h5>Site: {{ input.sites }}</h5>
     <h5>Owner: {{ input.owner }}</h5>
+    <iframe src="{{ input.url }}" width="50%" height="500"></iframe>
+
 
     <h2>Comments</h2>
     {% if user.is_authenticated %}
