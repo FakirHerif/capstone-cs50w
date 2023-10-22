@@ -2,16 +2,17 @@
 
 {% block body %}
     <h2>Bookmarks</h2>
-    <form action="{% url 'displayCategory' %}" method="POST">
-       {% csrf_token %}
-       <label for="category">Select Category</label>
-            <select name="category" id="category">
-                {% for category in categories %}
-                    <option value="{{ category }}">{{ category }}</option>
-                {% endfor %}
-            </select>
-            <button type="submit" class="btn btn-warning">Select</button>
+    <form action="{% url 'bookmark' %}" method="GET">
+        <label for="category">Select Category</label>
+        <select name="category" id="category">
+            <option value="">Select a Category</option>
+            {% for category in categories %}
+                <option value="{{ category.categoryName }}">{{ category.categoryName }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-warning">Select</button>
     </form>
+    
 
     <div class="row mx-1">
     {% for input in input %}

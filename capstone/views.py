@@ -44,9 +44,15 @@ def addComment(request, id, slug):
 
 def displayBookmark(request):
     currentUser = request.user
-    input = currentUser.inputBookmark.all()
+    selected_category = request.GET.get('category')
+    if selected_category:
+        input = currentUser.inputBookmark.filter(category__categoryName=selected_category)
+    else:
+        input = currentUser.inputBookmark.all()
+    categories = Category.objects.all()
     return render(request, "capstone/bookmark.html", {
-        "input": input
+        "input": input,
+        "categories": categories,
     })
 
 def removeBookmark(request, id, slug):
