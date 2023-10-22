@@ -80,18 +80,17 @@ def addBookmark(request, id, slug):
 
 def displayCategory(request):
     category_name = request.GET.get('category')
-    if category_name:
+    if category_name and category_name != "":
         category = get_object_or_404(Category, categoryName=category_name)
         activeInput = Input.objects.filter(isActive=True, category=category)
-        return render(request, "capstone/displayCategory.html", {
-            "input": activeInput,
-            "categories": Category.objects.all()
-        })
     else:
-        return render(request, "capstone/displayCategory.html", {
-            "input": [],
-            "categories": Category.objects.all()
-        })
+        activeInput = Input.objects.filter(isActive=True)
+
+    return render(request, "capstone/displayCategory.html", {
+        "input": activeInput,
+        "categories": Category.objects.all()
+    })
+    
     
 def createInput(request):
     if request.method == "GET":

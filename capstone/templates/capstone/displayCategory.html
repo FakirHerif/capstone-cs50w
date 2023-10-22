@@ -17,7 +17,9 @@
     <div class="row">
         <div class="col-sm-6 col-md-4">
           <div class="thumbnail">
-            <img src="https://cdn.pixabay.com/photo/2017/08/05/11/16/logo-2582748_640.png" alt="{{ input.title }}" style="width: 50px;">
+            {% if input.category.categoryImage %}
+              <img src="{{ input.category.categoryImage.url }}" alt="{{ input.category.categoryName }}" style="width: 50px;">
+            {% endif %}
             <div class="caption">
               <h3>{{ input.title }}</h3>
               <p>{{ input.content }}</p>

@@ -19,7 +19,9 @@
         {% if input.isActive %}
             <div class="media-left media-middle">
                 <a href="{% url 'input' id=input.id slug=input.title|slugify %}">
-                    <img class="media-object" src="https://cdn.pixabay.com/photo/2017/08/05/11/16/logo-2582748_640.png" style="width: 50px;" alt="{{ input.title }}">
+                    {% if input.category.categoryImage %}
+                        <img src="{{ input.category.categoryImage.url }}" alt="{{ input.category.categoryName }}" style="width: 50px;">
+                    {% endif %}
                 </a>
             </div>
             <div class="media-body">
