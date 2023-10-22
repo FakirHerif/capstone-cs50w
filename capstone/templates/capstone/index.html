@@ -12,4 +12,11 @@
             </li>
         {% endfor %}
     </ul>
+
+    <form action="{% url 'search' %}" method="GET">
+        <input type="text" name="query" placeholder="Search" />
+        <button type="submit">Search</button>
+    </form>
+    
+
 {% endblock %}

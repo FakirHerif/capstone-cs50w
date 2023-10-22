@@ -14,4 +14,5 @@ urlpatterns = [
     path('addBookmark/<int:id>/<slug:slug>/', views.addBookmark, name='addBookmark'),
     path("bookmark", views.displayBookmark, name="bookmark"),
     path("addComment/<int:id>/<slug:slug>/", views.addComment, name="addComment"),
+    path('search/', views.search, name='search'),
 ]

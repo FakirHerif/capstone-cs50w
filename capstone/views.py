@@ -15,6 +15,15 @@ def index(request):
         "categories": allCategories
     })
 
+def search(request):
+    query = request.GET.get('query')
+    if query:
+        results = Input.objects.filter(title__icontains=query)
+    else:
+        results = Input.objects.none()
+    return render(request, 'capstone/search_results.html', {'results': results, 'query': query})
+
+
 def input(request, id, slug):
     inputData = Input.objects.get(pk=id)
     isInputInBookmark = request.user in inputData.bookmark.all()

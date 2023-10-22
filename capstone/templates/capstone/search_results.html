@@ -1,0 +1,16 @@
+{% extends "capstone/layout.html" %}
+
+{% block body %}
+    <h2>Search Results:</h2>
+    <p>Search: <strong>{{ query }}</strong></p>
+
+    <ul>
+        {% for result in results %}
+            <li>
+                <a href="{% url 'input' id=result.id slug=result.title|slugify %}">{{ result.title }}</a>
+            </li>
+        {% empty %}
+            <p>Search Results Not Found...</p>
+        {% endfor %}
+    </ul>
+{% endblock %}
