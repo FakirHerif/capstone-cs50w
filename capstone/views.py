@@ -62,6 +62,7 @@ def displayBookmark(request):
     return render(request, "capstone/bookmark.html", {
         "input": input,
         "categories": categories,
+        "selected_category": selected_category
     })
 
 def removeBookmark(request, id, slug):
