@@ -13,19 +13,8 @@ class Category(models.Model):
         return self.categoryName
 
 class Input(models.Model):
-
-    SITE_CHOICES = [
-        ('DevDocs', 'DevDocs'),
-    ]
-
-
     title = models.CharField(max_length=30)
     content = models.CharField(max_length=6000)
-    url = models.CharField(max_length=60)
-    sites = models.CharField(max_length=30,
-        choices=SITE_CHOICES,
-        default='DevDocs',
-    )
     owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="user")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, related_name="category")
     isActive = models.BooleanField(default=True)
@@ -38,6 +27,16 @@ class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="userComment")
     input = models.ForeignKey(Input, on_delete=models.CASCADE, blank=True, null=True, related_name="inputComment")
     message = models.CharField(max_length=400)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, related_name="categoryComment")
 
     def __str__(self):
         return f"{self.author} comment on {self.input}"
+    
+
+class Site(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="userSite")
+    name = models.CharField(max_length=30)
+    url = models.CharField(max_length=60)
+
+    def __str__(self):
+        return self.name

@@ -105,8 +105,6 @@ def createInput(request):
     else:
         title = request.POST["title"]
         content = request.POST["content"]
-        url = request.POST["url"]
-        sites = request.POST["sites"]
         category = request.POST["category"]
         currentUser = request.user
 
@@ -116,8 +114,6 @@ def createInput(request):
         newInput = Input(
             title = title,
             content = content,
-            url = url,
-            sites = sites,
             category = categoryData,
             owner = currentUser,
         )
