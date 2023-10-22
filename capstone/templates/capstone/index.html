@@ -4,13 +4,15 @@
     <h2>Categories</h2>
     <ul class="category-list">
         {% for category in categories %}
-            <li>
-                <a href="{% url 'displayCategory' %}?category={{ category.categoryName }}">
-                    <img src="{{ category.img_url }}" alt="{{ category.categoryName }}" class="category-image">
-                    {{ category.categoryName }}
-                </a>
-            </li>
-        {% endfor %}
+        <li>
+            <a href="{% url 'displayCategory' %}?category={{ category.categoryName }}">
+                {% if category.categoryImage %}
+                    <img src="{{ category.categoryImage.url }}" alt="{{ category.categoryName }}" class="category-image" style="width: 50px;">
+                {% endif %}
+                {{ category.categoryName }}
+            </a>
+        </li>
+    {% endfor %}
     </ul>
 
     <form action="{% url 'search' %}" method="GET">
