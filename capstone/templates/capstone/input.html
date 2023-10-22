@@ -1,53 +1,81 @@
 {% extends "capstone/layout.html" %}
 
 {% block body %}
-
-    <div class="row">
-        {% if user.is_authenticated %}
-            {% if isInputInBookmark %}
-                <form action="{% url 'removeBookmark' id=input.id slug=input.title|slugify %}" method="POST">
-            {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Remove Bookmark</button>
-                </form>
-            {% else %}
-                <form action="{% url 'addBookmark' id=input.id slug=input.title|slugify %}" method="POST">
-                {% csrf_token %}
-                    <button type="submit" class="btn btn-success">Add Bookmark</button>
-                </form>
-            {% endif %}
-        {% endif %}
-    </div>
-    <div class="row mx-1">
-        {% if input.category.categoryImage %}
-        <img src="{{ input.category.categoryImage.url }}" alt="{{ input.category.categoryName }}" style="width: 50px;">
-        {% endif %}
-        <h2>{{ input.title }}</h2>
-    </div>
-    <p>{{ input.content }}</p>
-    <h5>Site: {{ input.sites }}</h5>
-    <h5>Owner: {{ input.owner }}</h5>
-    <iframe src="{{ input.url }}" width="50%" height="500"></iframe>
-
-
-    <h2>Comments</h2>
+<div class="row">
     {% if user.is_authenticated %}
-        <form action="{% url 'addComment' id=input.id slug=input.title|slugify %}" method="POST">
+        {% if isInputInBookmark %}
+            <form action="{% url 'removeBookmark' id=input.id slug=input.title|slugify %}" method="POST">
             {% csrf_token %}
-            <div class="form-group">
-                <label for="">Add Comment</label>
-                <input type="text" name="newComment" placehold="Add new comment" id="">
-                <button type="submit" class="btn btn-warning">Add</button>
-            </div>
-        </form>
+                <button type="submit" class="btn btn-danger">Remove Bookmark</button>
+            </form>
+        {% else %}
+            <form action="{% url 'addBookmark' id=input.id slug=input.title|slugify %}" method="POST">
+            {% csrf_token %}
+                <button type="submit" class="btn btn-success">Add Bookmark</button>
+            </form>
+        {% endif %}
     {% endif %}
+</div>
+<div class="row mx-1">
+    {% if input.category.categoryImage %}
+    <img src="{{ input.category.categoryImage.url }}" alt="{{ input.category.categoryName }}" style="width: 50px;">
+    {% endif %}
+    <h2>{{ input.title }}</h2>
+</div>
+<p>{{ input.content }}</p>
+<h5>Site: {{ input.sites }}</h5>
+<h5>Owner: {{ input.owner }}</h5>
+</div>
+<div class="container-fluid">
+    <div class="row">
 
-    <ul class="list-group">
-    {% for comment in allComments %}
-        <li class="list-group-item">Comment: {{ comment.message }}
-            <br>
-            <p>Posted by <strong style="color: red;">{{ comment.author }}</strong></p>
-        </li>
-    {% endfor %}
-    </ul>
+        <div class="col-md-2">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" id="v-pills-pages-tab" data-toggle="pill" href="" role="tab" aria-controls="v-pills-pages" aria-selected="true">Pages</a>
+                <a class a class="nav-link" id="v-pills-devdocs-tab" data-toggle="pill" href="" role="tab" aria-controls="v-pills-devdocs" aria-selected="false">Site: DevDocs</a>
+                <a class="nav-link" id="v-pills-examples-tab" data-toggle="pill" href="" role="tab" aria-controls="v-pills-examples" aria-selected="false">Examples</a>
+                <a class="nav-link" id="v-pills-notes-tab" data-toggle a class="nav-link" id="v-pills-devdocs-tab" data-toggle="pill" href="" role="tab" aria-controls="v-pills-devdocs" aria-selected="false">Notes</a>
+            </div>
+        </div>
 
+
+        <div class="col-md-10">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-pages" role="tabpanel" aria-labelledby="v-pills-pages-tab">
+                    <iframe src="{{ input.url }}" width="100%" height="500"></iframe>
+                </div>
+                <div class="tab-pane fade" id="v-pills-devdocs" role="tabpanel" aria-labelledby="v-pills-devdocs-tab">
+                    <iframe src="https://www.w3schools.com/charsets/ref_emoji_smileys.asp" width="100%" height="500"></iframe>
+                </div>
+                <div class="tab-pane fade" id="v-pills-examples" role="tabpanel" aria-labelledby="v-pills-examples-tab">
+
+                </div>
+                <div class="tab-pane fade" id="v-pills-notes" role="tabpanel" aria-labelledby="v-pills-notes-tab">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2>Comments</h2>
+{% if user.is_authenticated %}
+    <form action="{% url 'addComment' id=input.id slug=input.title|slugify %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="">Add Comment</label>
+            <input type="text" name="newComment" placeholder="Add new comment" id="">
+            <button type="submit" class="btn btn-warning">Add</button>
+        </div>
+    </form>
+{% endif %}
+<ul class="list-group">
+{% for comment in allComments %}
+    <li class="list-group-item">Comment: {{ comment.message }}
+        <br>
+        <p>Posted by <strong style="color: red;">{{ comment.author }}</strong></p>
+    </li>
+{% endfor %}
+</ul>
+</div>
 {% endblock %}
