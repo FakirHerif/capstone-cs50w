@@ -83,12 +83,15 @@ def displayCategory(request):
     if category_name and category_name != "":
         category = get_object_or_404(Category, categoryName=category_name)
         activeInput = Input.objects.filter(isActive=True, category=category)
+        selected_category = category_name
     else:
         activeInput = Input.objects.filter(isActive=True)
+        selected_category = None
 
     return render(request, "capstone/displayCategory.html", {
         "input": activeInput,
-        "categories": Category.objects.all()
+        "categories": Category.objects.all(),
+        "selected_category": selected_category
     })
     
     
