@@ -13,9 +13,11 @@ class CategoryAdmin(admin.ModelAdmin):
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('id', 'author', 'input', 'category', 'message')
+    list_filter = ('category',)
 
 class SiteAdmin(admin.ModelAdmin):
-    list_display = ('id', 'author', 'name', 'url')
+    list_display = ('id', 'author', 'name', 'url', 'input', 'category')
+    list_filter = ('category', 'name',)
 
 admin.site.register(User)
 admin.site.register(Category, CategoryAdmin)

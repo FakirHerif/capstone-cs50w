@@ -38,12 +38,14 @@ def input(request, id, slug):
 def addComment(request, id, slug):
     currentUser = request.user
     inputData = Input.objects.get(pk=id)
+    categoryData = Category.objects.get(pk=id)
     message = request.POST['newComment']
 
     newComment = Comment(
         author = currentUser,
         input = inputData,
-        message = message
+        message = message,
+        category = categoryData,
     )
 
     newComment.save()

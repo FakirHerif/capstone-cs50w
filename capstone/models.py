@@ -35,6 +35,8 @@ class Comment(models.Model):
 
 class Site(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="userSite")
+    input = models.ForeignKey(Input, on_delete=models.CASCADE, blank=True, null=True, related_name="inputSite")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, related_name="categorySite")
     name = models.CharField(max_length=30)
     url = models.CharField(max_length=60)
 
