@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-from .models import User, Category, Input, Comment, Site
+from .models import User, Category, Input, Comment, Site, Note
 
 
 def index(request):
@@ -45,6 +45,19 @@ def addSite(request, id, slug):
         new_site = Site(name=site_name, url=site_url, input=input_data, author=user, category=category)
         
         new_site.save()
+    return HttpResponseRedirect(reverse("input", args=(id, slug)))
+
+
+def addNote(request, id, slug):
+    if request.method == "POST":
+        note_title = request.POST.get("note_title")
+        note_content = request.POST.get("note_content")
+        input_data = get_object_or_404(Input, pk=id)
+        user = request.user
+        category = input_data.category
+        new_note = Note(title=note_title, content=note_content, input=input_data, author=user, category=category)
+        
+        new_note.save()
     return HttpResponseRedirect(reverse("input", args=(id, slug)))
 
 
