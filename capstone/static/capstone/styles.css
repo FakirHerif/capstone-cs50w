@@ -1,5 +1,17 @@
 body {
     padding: 10px;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+
+
+
+
+footer {
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
 }
 
 .card-container {
