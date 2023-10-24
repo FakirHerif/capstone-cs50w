@@ -12,7 +12,7 @@ class CustomUserAdmin(UserAdmin):
 
 
 class InputAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'isActive', 'owner', 'category', 'content')
+    list_display = ('id', 'isActive', 'owner', 'category', 'title', 'content')
     list_filter = ('isActive', 'category', 'owner')
     search_fields = ('title', 'content', 'owner__username', 'category__categoryName')
 
@@ -20,17 +20,17 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('categoryName', 'categoryImage')
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'author', 'input', 'category', 'message')
+    list_display = ('id', 'author', 'category', 'input', 'message')
     list_filter = ('category', 'author', 'input')
     search_fields = ('author__username', 'input__title', 'category__categoryName', 'message')
 
 class SiteAdmin(admin.ModelAdmin):
-    list_display = ('id', 'author', 'name', 'url', 'input', 'category')
+    list_display = ('id', 'author', 'category', 'input', 'name', 'url')
     list_filter = ('category', 'name', 'input', 'author')
     search_fields = ('author__username', 'input__title', 'category__categoryName', 'name', 'url')
 
 class NoteAdmin(admin.ModelAdmin):
-    list_display = ('id', 'owner', 'title', 'content', 'input', 'category')
+    list_display = ('id', 'owner', 'category', 'input', 'title', 'content')
     list_filter = ('category', 'title', 'input', 'owner')
     search_fields = ('owner__username', 'input__title', 'category__categoryName', 'title', 'content')
     

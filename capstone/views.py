@@ -55,7 +55,7 @@ def addNote(request, id, slug):
         input_data = get_object_or_404(Input, pk=id)
         user = request.user
         category = input_data.category
-        new_note = Note(title=note_title, content=note_content, input=input_data, author=user, category=category)
+        new_note = Note(title=note_title, content=note_content, input=input_data, owner=user, category=category)
         
         new_note.save()
     return HttpResponseRedirect(reverse("input", args=(id, slug)))
