@@ -1,8 +1,9 @@
 {% extends "capstone/layout.html" %}
 
 {% block body %}
-    <h2>Create New Input</h2>
+    <h2>Create New Topic</h2>
 
+    {% if user.is_authenticated %}
     <form action="{% url 'create' %}" method="POST">
 
         {% csrf_token %}
@@ -32,6 +33,9 @@
             </select>
         </div>
         <button type="submit" class="btn btn-success">Add</button>
-        
     </form>    
+    {% else %}
+    <p>You must <strong><a href="{% url 'login' %}">login</a></strong> to add a topic.</p>
+    <p>Don't have an account? <strong><a href="{% url 'register' %}">Register here.</a></strong></p>
+    {% endif %}
 {% endblock %}
