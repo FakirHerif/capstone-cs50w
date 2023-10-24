@@ -3,6 +3,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.utils.text import slugify
 
 from .models import User, Category, Input, Comment, Site, Note
 
@@ -148,7 +149,7 @@ def createInput(request):
         )
         newInput.save()
 
-        return HttpResponseRedirect(reverse(index))
+        return HttpResponseRedirect(reverse("input", args=(newInput.id, slugify(newInput.title))))
 
 
 
