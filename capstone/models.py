@@ -42,3 +42,13 @@ class Site(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Note(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, blank = True, null=True, related_name="userNote")
+    input = models.ForeignKey(Input, on_delete=models.CASCADE, blank=True, null=True, related_name="inputNote")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, related_name="categoryNote")
+    title = models.CharField(max_length=60)
+    content = models.CharField(max_length=3600)
+
+    def __str__(self):
+        return self.title

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User,Category,Input,Comment,Site
+from .models import User,Category,Input,Comment,Site, Note
 from django.contrib.auth.admin import UserAdmin
 
 # Register your models here.
@@ -28,9 +28,15 @@ class SiteAdmin(admin.ModelAdmin):
     list_display = ('id', 'author', 'name', 'url', 'input', 'category')
     list_filter = ('category', 'name', 'input', 'author')
     search_fields = ('author__username', 'input__title', 'category__categoryName', 'name', 'url')
+
+class NoteAdmin(admin.ModelAdmin):
+    list_display = ('id', 'owner', 'title', 'content', 'input', 'category')
+    list_filter = ('category', 'title', 'input', 'owner')
+    search_fields = ('owner__username', 'input__title', 'category__categoryName', 'title', 'content')
     
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Input, InputAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Site, SiteAdmin)
+admin.site.register(Note, NoteAdmin)
