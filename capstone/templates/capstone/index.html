@@ -1,24 +1,22 @@
 {% extends "capstone/layout.html" %}
 
 {% block body %}
-    <h2>Categories</h2>
-    <ul class="category-list">
+    <h2 style= "text-align: center;">Categories</h2>
+
+    <div class="card-container">
         {% for category in categories %}
-        <li>
-            <a href="{% url 'displayCategory' %}?category={{ category.categoryName }}">
-                {% if category.categoryImage %}
-                    <img src="{{ category.categoryImage.url }}" alt="{{ category.categoryName }}" class="category-image" style="width: 50px;">
-                {% endif %}
-                {{ category.categoryName }}
-            </a>
-        </li>
-    {% endfor %}
-    </ul>
-
-    <form action="{% url 'search' %}" method="GET">
-        <input type="text" name="query" placeholder="Search" />
-        <button type="submit">Search</button>
-    </form>
-    
-
+        <div class="card">
+            {% if category.categoryImage %}
+                <img class="card-img-top" src="{{ category.categoryImage.url }}" alt="{{ category.categoryName }}" class="category-image" style="height: 200px; width: 200px;">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title"><a href="{% url 'displayCategory' %}?category={{ category.categoryName }}"></a>{{ category.categoryName }}</h5>
+                <p class="card-text"></p>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'displayCategory' %}?category={{ category.categoryName }}" class="btn btn-primary">VIEW CONTENTS</a>
+            </div>
+        </div>
+        {% endfor %}
+</div>
 {% endblock %}
