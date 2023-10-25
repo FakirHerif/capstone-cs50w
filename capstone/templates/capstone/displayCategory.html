@@ -1,5 +1,9 @@
 {% extends "capstone/layout.html" %}
 
+{% block title %}
+	FakirCode - {% if selected_category %}{{ selected_category }}{% else %}All Categories{% endif %}
+{% endblock title %}
+
 {% block body %}
     <h2>Topics</h2>
     <br>
@@ -34,4 +38,6 @@
             </tr>
         </tbody>
     </table>
+    <br>
+    <p>Not what you're looking for? You can add a new entry here.</p>
 {% endblock %}

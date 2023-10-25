@@ -1,109 +1,135 @@
 {% extends "capstone/layout.html" %}
 
+{% block title %}
+    FakirCode - {{ input.title }}
+{% endblock title %}
+
 {% block body %}
 <div class="row">
     {% if user.is_authenticated %}
         {% if isInputInBookmark %}
             <form action="{% url 'removeBookmark' id=input.id slug=input.title|slugify %}" method="POST">
-            {% csrf_token %}
+                {% csrf_token %}
                 <button type="submit" class="btn btn-danger">Remove Bookmark</button>
             </form>
         {% else %}
             <form action="{% url 'addBookmark' id=input.id slug=input.title|slugify %}" method="POST">
-            {% csrf_token %}
+                {% csrf_token %}
                 <button type="submit" class="btn btn-success">Add Bookmark</button>
             </form>
         {% endif %}
     {% endif %}
 </div>
 
-
-
-
-
-
-<div class="d-flex align-items-start">
-    <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-      <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</button>
-      <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">DevDocs</button>
-      <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</button>
-      <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</button>
-      <button class="nav-link" id="v-pills-add-tab" data-bs-toggle="pill" data-bs-target="#v-pills-add" type="button" role="tab" aria-controls="v-pills-add" aria-selected="false">ADD +++ </button>
-    </div>
-    <div class="tab-content" id="v-pills-tabContent">
-      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-
-        {% if input.category.categoryImage %}
-            <img src="{{ input.category.categoryImage.url }}" alt="{{ input.category.categoryName }}" style="width: 50px;">
-        {% endif %}
-        <h2>{{ input.title }}</h2>
-
-        <p>{{ input.content }}</p>
-        <p>Owner: {{ input.owner }}</p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis autem reiciendis, deserunt temporibus et est, laborum sint quos dolores voluptatum ullam optio dolorum maxime nisi voluptate tempore aut magnam. Officia!</div>
-      <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab"><iframe src="https://www.w3schools.com/charsets/ref_emoji_smileys.asp" width="1000" height="500"></iframe></div>
-      <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
-      <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
-      <div class="tab-pane fade" id="v-pills-add" role="tabpanel" aria-labelledby="v-pills-add-tab"> 
-  
-        <h2>Create New Input</h2>
-
-        <form action="{% url 'add_site' input.id input.title|slugify %}" method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="site_name">Site Name</label>
-                <input type="text" class="form-control" id="site_name" name="site_name" placeholder="Enter Site Name">
+<div class="container mb-5">
+    <div class="row mb-5">
+        <aside class="col-sm-12 col-md-3 col-xl-2 mb-2 px-2">
+            <div class="row mx-0">
+                <div class='col col-sm-4 col-md-12 mb-3 list-group list-group-flush'>
+                    <div class="d-flex justify-content-between align-items-baseline border-bottom border-warning">
+                        <div>
+                            {% if input.category.categoryImage %}
+                                <img src="{{ input.category.categoryImage.url }}" alt="{{ input.category.categoryName }}" style="width: 30px;">
+                            {% endif %}
+                            <h5 class="d-flex">{{ input.title }}</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class='col col-sm-4 col-md-12 mb-3 list-group list-group-flush'>
+                    <div class="d-flex justify-content-between align-items-baseline border-bottom border-warning">
+                        <h5 class="d-flex">Sites</h5>
+                        
+                            <button class="btn btn-sm add_content no_outline" id='add_example'><i class="fas fa-plus fa-xxs" title='Add an example'></i></button>
+                       
+                    </div>
+                    <a href="#" class="link list-group-item ms-1 px-1 py-1" target="_blank" rel="noopener noreferrer">######## <i class="fas fa-external-link-alt fa-xxs" title="Will open in a new tab"></i></a>
+                </div>
+                <div class='col col-sm-4 col-md-12 mb-3 list-group list-group-flush'>
+                    <div class='d-flex justify-content-between align-items-baseline border-bottom border-warning'>
+                        <h5 class="d-flex">Notes</h5>
+                        <button class="btn btn-sm add_content no_outline" id='add_note' name='add_note'><i class="fas fa-plus fa-xxs" title='Add a note'></i></button>
+                    </div>
+                    <a href="#" class="link list-group-item ms-1 px-1 py-2">DENEME <i class="fas fa-chevron-circle-right fa-xxs"></i></a>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="site_url">Site URL</label>
-                <input type="text" class="form-control" id="site_url" name="site_url" placeholder="Enter Site URL">
+        </aside>
+        <main id="mc" class='col-sm-12 col-md-9 col-xl-10 px-2 p-sm-0'>
+            <div>
+                {% if input.category.categoryImage %}
+                    <img src="{{ input.category.categoryImage.url }}" alt="{{ input.category.categoryName }}" style="width: 30px;">
+                {% endif %}
+                <h1 class="card-title">
+                    <a href="{% url 'displayCategory' %}?category={{ category.categoryName }}"></a>{{ input.category.categoryName }}
+                </h1>
+                <h2>{{ input.title }}</h2>
+                <p id="contentText">{{ input.content }}</p>
+                <div id="siteFormContainer" style="display: none;">
+                    {% if user.is_authenticated %}
+                    <form id="siteForm" class="mt-3">
+                        <div class="form-group">
+                            <label for="site_name">Site Name</label>
+                            <input type="text" class="form-control" id="site_name" name="site_name" placeholder="Enter Site Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="site_url">Site URL</label>
+                            <input type="text" class="form-control" id="site_url" name="site_url" placeholder="Enter Site URL">
+                        </div>
+                        <button type="button" class="btn btn-success" id="addSiteButton">Add</button>
+                        <button type="button" class="btn btn-secondary" id="cancelButton">Cancel</button>
+                    </form>
+                    {% else %}
+                    <p>----LOGIN----</p>
+                    <button type="button" class="btn btn-secondary" id="cancelButton">Cancel</button>
+                    {% endif %}
+                </div>
             </div>
-            <button type="submit" class="btn btn-success">Add</button>
-        </form>
-        
-      </div>
+        </main>
     </div>
-  </div>
-
-  <h2>Create New Note</h2>
-
-  <form action="{% url 'add_note' input.id input.title|slugify %}" method="POST">
-    {% csrf_token %}
-    <div class="form-group">
-        <label for="note_title">Note Title</label>
-        <input type="text" class="form-control" id="note_title" name="note_title" placeholder="Enter Note Title">
-    </div>
-    <div class="form-group">
-        <label for="note_content">Note Content</label>
-        <input type="text" class="form-control" id="note_content" name="note_content" placeholder="Enter Note Content">
-    </div>
-    <button type="submit" class="btn btn-success">Add</button>
-</form>
-
-
-
-<br>
-
-
-<br>
-
-<h2>Comments</h2>
-{% if user.is_authenticated %}
-    <form action="{% url 'addComment' id=input.id slug=input.title|slugify %}" method="POST">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="">Add Comment</label>
-            <input type="text" name="newComment" placeholder="Add new comment" id="">
-            <button type="submit" class="btn btn-warning">Add</button>
-        </div>
-    </form>
-{% endif %}
-<ul class="list-group">
-{% for comment in allComments %}
-    <li class="list-group-item">Comment: {{ comment.message }}
-        <br>
-        <p>Posted by <strong style="color: red;">{{ comment.author }}</strong></p>
-    </li>
-{% endfor %}
-</ul>
 </div>
+
+<div class="card border-light">
+    <h4 class="card-header bg-light bg-gradient text-secondary note_title">1</h4>
+    <div class="card-body note_body">deneme</div>
+    <div class="card-footer bg-light">
+        <button type='button' name='note_edit' class='btn btn-sm btn-warning' data-status='edit'><i class="far fa-edit"></i> edit</button>
+        <button type='button' name='note_delete' class='btn btn-sm btn-danger'><i class="far fa-trash-alt"></i> delete</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const addSiteButton = document.getElementById("add_example");
+        const siteFormContainer = document.getElementById("siteFormContainer");
+        const cancelButton = document.getElementById("cancelButton");
+        const contentText = document.getElementById("contentText");
+        let formVisible = false;
+
+        addSiteButton.addEventListener("click", function() {
+            siteFormContainer.style.display = "block";
+            contentText.style.display = "none";
+            formVisible = true;
+        });
+
+        cancelButton.addEventListener("click", function() {
+            siteFormContainer.style.display = "none";
+            contentText.style.display = "block";
+            formVisible = false;
+        });
+
+        const addSiteForm = document.getElementById("siteForm");
+
+        addSiteForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+
+            const siteName = document.getElementById("site_name").value;
+            const siteURL = document.getElementById("site_url").value;
+
+
+            siteFormContainer.style.display = "none";
+            contentText.style.display = "block";
+            formVisible = false;
+        });
+    });
+</script>
 {% endblock %}
