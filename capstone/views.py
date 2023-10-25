@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.utils.text import slugify
@@ -47,6 +47,15 @@ def addSite(request, id, slug):
         
         new_site.save()
     return HttpResponseRedirect(reverse("input", args=(id, slug)))
+
+
+def get_sites(request, id):
+    input_data = get_object_or_404(Input, pk=id)
+    sites = Site.objects.filter(input=input_data)
+    data = {
+        "sites": [{"name": site.name, "url": site.url} for site in sites]
+    }
+    return JsonResponse(data)
 
 
 def addNote(request, id, slug):

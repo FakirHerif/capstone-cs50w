@@ -42,7 +42,9 @@
                             <button class="btn btn-sm add_content no_outline" id='add_example'><i class="fas fa-plus fa-xxs" title='Add an example'></i></button>
                        
                     </div>
-                    <a href="#" class="link list-group-item ms-1 px-1 py-1" target="_blank" rel="noopener noreferrer">######## <i class="fas fa-external-link-alt fa-xxs" title="Will open in a new tab"></i></a>
+                    <div id="linksContainer">
+                        <a href="#" class="link list-group-item ms-1 px-1 py-1" target="_blank" rel="noopener noreferrer">######## <i class="fas fa-external-link-alt fa-xxs" title="Will open in a new tab"></i></a>
+                    </div>
                 </div>
                 <div class='col col-sm-4 col-md-12 mb-3 list-group list-group-flush'>
                     <div class='d-flex justify-content-between align-items-baseline border-bottom border-warning'>
@@ -120,11 +122,41 @@
             const siteName = document.getElementById("site_name").value;
             const siteURL = document.getElementById("site_url").value;
 
+            const newLink = document.createElement("a");
+            newLink.href = siteURL; 
+            newLink.target = "_blank"; 
+            newLink.rel = "noopener noreferrer"; 
+            newLink.innerText = siteName; 
+           
+            const linksContainer = document.querySelector("#linksContainer");
+            linksContainer.appendChild(newLink);
+
 
             siteFormContainer.style.display = "none";
             contentText.style.display = "block";
             formVisible = false;
         });
+
+        fetch("{% url 'get_sites' input.id %}")
+            .then(response => response.json())
+            .then(data => {
+                const linksContainer = document.querySelector("#linksContainer");
+                data.sites.forEach(site => {
+            const newLink = document.createElement("a");
+            newLink.target = "_blank";
+            newLink.rel = "noopener noreferrer"; 
+            newLink.href = site.url;
+            newLink.href = site.url.startsWith('http') ? site.url : 'http://' + site.url;
+            newLink.rel = "noopener noreferrer";
+
+            newLink.className = "link list-group-item ms-1 px-1 py-1";
+            newLink.innerHTML = site.name + ' <i class="fas fa-external-link-alt fa-xxs" title="Will open in a new tab"></i>';
+
+            linksContainer.appendChild(newLink);
+        });
+    });
+
+
     });
 </script>
 {% endblock %}
