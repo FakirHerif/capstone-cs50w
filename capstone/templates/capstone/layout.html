@@ -27,10 +27,12 @@
                       {{ selected_category|default:"All Categories" }}
                     </a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="{% url 'displayCategory' %}">All Categories</a></li>
+                      <li><a class="dropdown-item" href="{% if request.resolver_match.url_name == 'bookmark' %}{% url 'bookmark' %}{% else %}{% url 'displayCategory' %}{% endif %}">All Categories</a></li>
                       <li><hr class="dropdown-divider"></li>
                       {% for category in categories %}
-                        <li><a class="dropdown-item" href="{% url 'displayCategory' %}?category={{ category.categoryName }}">{{ category.categoryName }}</a></li>
+                        <li><a class="dropdown-item" href="{% if request.resolver_match.url_name == 'bookmark' %}{% url 'bookmark' %}?category={{ category.categoryName }}{% else %}{% url 'displayCategory' %}?category={{ category.categoryName }}{% endif %}">
+                          {{ category.categoryName }}
+                      </a></li>
                       {% endfor %}
                     </ul>
                   </li>
