@@ -74,7 +74,7 @@
                         </div>
                         <div class="form-group">
                             <label for="site_url">Site URL</label>
-                            <input type="text" class="form-control" id="site_url" name="site_url" placeholder="Enter Site URL">
+                            <input type="text" class="form-control" id="site_url" name="site_url" placeholder="Example: www.coderbyte.com">
                         </div>
                         <button type="submit" class="btn btn-success" id="addSiteButton">Add</button>
                         <button type="button" class="btn btn-secondary" id="cancelButton">Cancel</button>
@@ -107,6 +107,8 @@
         const contentText = document.getElementById("contentText");
         const iframeContainer = document.getElementById("iframe");
         let formVisible = false;
+        const siteNameInput = document.getElementById("site_name");
+        const siteURLInput = document.getElementById("site_url");
 
         addSiteButton.addEventListener("click", function() {
             siteFormContainer.style.display = "block";
@@ -125,15 +127,20 @@
         const addSiteForm = document.getElementById("siteForm");
 
         addSiteForm.addEventListener("submit", function(event) {
-            
+            const siteNameInput = document.getElementById("site_name");
+            const siteURLInput = document.getElementById("site_url");
 
-            const siteName = document.getElementById("site_name").value;
-            const siteURL = document.getElementById("site_url").value;
+            const siteName = siteNameInput.value;
+            const siteURL = siteURLInput.value;
 
+            const extractedSiteName = getSiteNameFromURL(siteURL);
 
-            if (siteName.includes("devdocs") || siteURL.includes("devdocs")) {
+            if (extractedSiteName) {
+                siteNameInput.value = extractedSiteName;
 
-                const iframe = document.createElement("iframe");
+                if (siteURL.includes("devdocs") || extractedSiteName.includes("devdocs")) {
+
+                    const iframe = document.createElement("iframe");
                 iframe.src = siteURL;
                 iframe.style.width = "100%";
                 iframe.style.height = "500px";
@@ -144,17 +151,56 @@
                 newLink.href = siteURL; 
                 newLink.target = "_blank"; 
                 newLink.rel = "noopener noreferrer"; 
-                newLink.innerText = siteName; 
-           
+                newLink.innerText = extractedSiteName;           
                 const linksContainer = document.querySelector("#linksContainer");
                 linksContainer.appendChild(newLink);
-
             }
 
             siteFormContainer.style.display = "none";
             contentText.style.display = "block";
             formVisible = false;
-        });
+        } else {
+            alert("Error !!!");
+        }
+    });
+
+    function getSiteNameFromURL(url) {
+    const domainStart = url.indexOf("://") > -1 ? url.indexOf("://") + 3 : 0; 
+    const pathStart = url.indexOf("/", domainStart); 
+    
+
+    const domainEnd = pathStart > -1 ? pathStart : url.length;
+    
+
+    const domain = url.substring(domainStart, domainEnd);
+    
+    const parts = domain.split(".");
+    const extensions = [".com", ".net", ".org", ".xyz", ".io"];
+    
+    for (let i = 0; i < parts.length; i++) {
+        const part = parts[i];
+        if (i === 0) {
+
+            if (part.startsWith("www")) {
+                parts[i] = parts[i].substring(4);
+            } else if (extensions.includes("." + part)) {
+                parts.splice(i, 1);
+                i--;
+            }
+        } else if (extensions.includes("." + part)) {
+
+            parts.splice(i, 1);
+            i--;
+        }
+    }
+    
+
+    const siteName = parts.join("");
+
+    return siteName || null;
+}
+
+
 
         fetch("{% url 'get_sites' input.id %}")
             .then(response => response.json())
