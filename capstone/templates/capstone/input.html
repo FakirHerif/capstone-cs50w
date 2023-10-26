@@ -21,25 +21,23 @@
     {% endif %}
 </div>
 
+<button type="submit" class="btn btn-danger">BACK</button>
+
+
 <div class="container mb-5">
     <div class="row mb-5">
         <aside class="col-sm-12 col-md-3 col-xl-2 mb-2 px-2">
             <div class="row mx-0">
                 <div class='col col-sm-4 col-md-12 mb-3 list-group list-group-flush'>
                     <div class="d-flex justify-content-between align-items-baseline border-bottom border-warning">
-                        <div class="d-flex">
-                            {% if input.category.categoryImage %}
-                                <img src="{{ input.category.categoryImage.url }}" alt="{{ input.category.categoryName }}" style="width: 40px;">
-                            {% endif %}
-                            <h5 class="d-flex">{{ input.title }}</h5>
-                        </div>
+                        <h4><strong>FakirCode</strong></h4>
                     </div>
                 </div>
                 <div class='col col-sm-4 col-md-12 mb-3 list-group list-group-flush'>
                     <div class="d-flex justify-content-between align-items-baseline border-bottom border-warning">
                         <h5 class="d-flex">Sites</h5>
                         
-                            <button class="btn btn-sm add_content no_outline" id='add_example'><i class="fas fa-plus fa-xxs" title='Add an example'></i></button>
+                            <button class="btn btn-sm add_content no_outline" id='add_sites'><i class="fas fa-plus fa-xxs" title='Add Site'></i></button>
                        
                     </div>
                     <div id="linksContainer">
@@ -57,8 +55,14 @@
         </aside>
         <main id="mc" class='col-sm-12 col-md-9 col-xl-10 px-2 p-sm-0'>
             <div>
-                <h1>{{ input.title }}</h1>
+                <div class="d-flex">
+                    {% if input.category.categoryImage %}
+                        <img src="{{ input.category.categoryImage.url }}" alt="{{ input.category.categoryName }}" style="width: 50px; height: 50px;">
+                    {% endif %}
+                    <h1 class="d-flex">{{ input.title }}</h1>
+                </div>
                 <p id="contentText">{{ input.content }}</p>
+                <div id="iframe"></div>
                 <div id="siteFormContainer" style="display: none;">
                     {% if user.is_authenticated %}
                     <p>Create New Site</p>
@@ -97,21 +101,24 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const addSiteButton = document.getElementById("add_example");
+        const addSiteButton = document.getElementById("add_sites");
         const siteFormContainer = document.getElementById("siteFormContainer");
         const cancelButton = document.getElementById("cancelButton");
         const contentText = document.getElementById("contentText");
+        const iframeContainer = document.getElementById("iframe");
         let formVisible = false;
 
         addSiteButton.addEventListener("click", function() {
             siteFormContainer.style.display = "block";
             contentText.style.display = "none";
+            iframeContainer.style.display = "none";
             formVisible = true;
         });
 
         cancelButton.addEventListener("click", function() {
             siteFormContainer.style.display = "none";
             contentText.style.display = "block";
+            iframeContainer.style.display = "block";
             formVisible = false;
         });
 
@@ -123,15 +130,26 @@
             const siteName = document.getElementById("site_name").value;
             const siteURL = document.getElementById("site_url").value;
 
-            const newLink = document.createElement("a");
-            newLink.href = siteURL; 
-            newLink.target = "_blank"; 
-            newLink.rel = "noopener noreferrer"; 
-            newLink.innerText = siteName; 
-           
-            const linksContainer = document.querySelector("#linksContainer");
-            linksContainer.appendChild(newLink);
 
+            if (siteName.includes("devdocs") || siteURL.includes("devdocs")) {
+
+                const iframe = document.createElement("iframe");
+                iframe.src = siteURL;
+                iframe.style.width = "100%";
+                iframe.style.height = "500px";
+                iframeContainer.innerHTML = '';
+                iframeContainer.appendChild(iframe);
+            } else {
+                const newLink = document.createElement("a");
+                newLink.href = siteURL; 
+                newLink.target = "_blank"; 
+                newLink.rel = "noopener noreferrer"; 
+                newLink.innerText = siteName; 
+           
+                const linksContainer = document.querySelector("#linksContainer");
+                linksContainer.appendChild(newLink);
+
+            }
 
             siteFormContainer.style.display = "none";
             contentText.style.display = "block";
@@ -141,19 +159,31 @@
         fetch("{% url 'get_sites' input.id %}")
             .then(response => response.json())
             .then(data => {
-                const linksContainer = document.querySelector("#linksContainer");
                 data.sites.forEach(site => {
-            const newLink = document.createElement("a");
-            newLink.target = "_blank";
-            newLink.rel = "noopener noreferrer"; 
-            newLink.href = site.url;
-            newLink.href = site.url.startsWith('http') ? site.url : 'http://' + site.url;
-            newLink.rel = "noopener noreferrer";
+                if (site.name.includes("devdocs") || site.url.includes("devdocs")) {
+                    const iframe = document.createElement("iframe");
+                    iframe.src = site.url;
+                    iframe.style.width = "100%";
+                    iframe.style.height = "500px";
+                    iframeContainer.innerHTML = '';
+                    iframeContainer.appendChild(iframe);
 
-            newLink.className = "link list-group-item ms-1 px-1 py-1";
-            newLink.innerHTML = site.name + ' <i class="fas fa-external-link-alt fa-xxs" title="Will open in a new tab"></i>';
-
-            linksContainer.appendChild(newLink);
+                    const devdocsLink = document.createElement("a");
+                    devdocsLink.innerText = "devdocs";
+                    devdocsLink.href = "#";
+                    devdocsLink.className = "link list-group-item ms-1 px-1 py-1";
+                    devdocsLink.style.backgroundColor = "#F2F2F2"
+                    linksContainer.appendChild(devdocsLink);
+                } else {
+                    const newLink = document.createElement("a");
+                    newLink.target = "_blank";
+                    newLink.rel = "noopener noreferrer";
+                    newLink.href = site.url.startsWith('http') ? site.url : 'http://' + site.url;
+                    newLink.className = "link list-group-item ms-1 px-1 py-1";
+                    newLink.innerHTML = site.name + ' <i class="fas fa-external-link-alt fa-xxs" title="Will open in a new tab"></i>';
+                    newLink.style.backgroundColor = "#F2F2F2"
+                    linksContainer.appendChild(newLink);
+                }
         });
     });
 
