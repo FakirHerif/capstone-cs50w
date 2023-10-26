@@ -67,6 +67,20 @@
                 </div>
                 <p id="contentText">{{ input.content }}</p>
                 <div id="iframe"></div>
+
+
+                <div id="notesContent">
+                    <div class="card border-light">
+                        <h4 class="card-header bg-light bg-gradient text-secondary note_title">1</h4>
+                        <div class="card-body note_body">deneme</div>
+                        <div class="card-footer bg-light">
+                            <button type='button' name='note_edit' class='btn btn-sm btn-warning' data-status='edit'><i class="far fa-edit"></i> edit</button>
+                            <button type='button' name='note_delete' class='btn btn-sm btn-danger'><i class="far fa-trash-alt"></i> delete</button>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div id="siteFormContainer" style="display: none;">
                     <h3>Create New Site</h3>
                     {% if user.is_authenticated %}
@@ -104,11 +118,12 @@
                         <input type="text" class="form-control" id="note_content"name="note_content" placeholder="Enter Note Content">
                     </div>
                     <button type="submit" class="btn btn-success" id="addNoteButton">Add</button>
+                    <button type="button" class="btn btn-secondary" id="cancelNoteButton">Cancel</button>
                     </form>
                     {% else %}
                     <p>----LOGIN----</p>
                     <form action="{% url 'add_note' input.id input.title|slugify %}" id="noteForm" method="POST">
-                    <button type="button" class="btn btn-secondary" id="cancelButton">Cancel</button>
+                    <button type="button" class="btn btn-secondary" id="cancelNoteButton">Cancel</button>
                     {% endif %}
                 </div>
             </div>
@@ -116,14 +131,7 @@
     </div>
 </div>
 
-<div class="card border-light">
-    <h4 class="card-header bg-light bg-gradient text-secondary note_title">1</h4>
-    <div class="card-body note_body">deneme</div>
-    <div class="card-footer bg-light">
-        <button type='button' name='note_edit' class='btn btn-sm btn-warning' data-status='edit'><i class="far fa-edit"></i> edit</button>
-        <button type='button' name='note_delete' class='btn btn-sm btn-danger'><i class="far fa-trash-alt"></i> delete</button>
-    </div>
-</div>
+
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -136,11 +144,32 @@
         const siteNameInput = document.getElementById("site_name");
         const siteURLInput = document.getElementById("site_url");
 
+        const addNoteButton = document.getElementById("add_note");
+        const noteFormContainer = document.getElementById("noteFormContainer");
+        const cancelNoteButton = document.getElementById("cancelNoteButton");
+
+        addNoteButton.addEventListener("click", function() {
+            noteFormContainer.style.display = "block";
+            siteFormContainer.style.display = "none";
+            contentText.style.display = "none";
+            iframeContainer.style.display = "none";
+            formVisible = true;
+        });
+
+        cancelNoteButton.addEventListener("click", function() {
+            siteFormContainer.style.display = "none";
+            contentText.style.display = "block";
+            iframeContainer.style.display = "block";
+            formVisible = false;
+            noteFormContainer.style.display = "none";
+        });
+        
         addSiteButton.addEventListener("click", function() {
             siteFormContainer.style.display = "block";
             contentText.style.display = "none";
             iframeContainer.style.display = "none";
             formVisible = true;
+            noteFormContainer.style.display = "none";
         });
 
         cancelButton.addEventListener("click", function() {
@@ -148,6 +177,7 @@
             contentText.style.display = "block";
             iframeContainer.style.display = "block";
             formVisible = false;
+            noteFormContainer.style.display = "none";
         });
 
         const addSiteForm = document.getElementById("siteForm");

@@ -57,6 +57,13 @@ def get_sites(request, id):
     }
     return JsonResponse(data)
 
+def get_notes(request, id):
+    input_data = get_object_or_404(Input, pk=id)
+    notes = Note.objects.filter(input=input_data)
+    data = {
+        "notes": [{"title": note.title, "content": note.content} for note in notes]
+    }
+
 
 def addNote(request, id, slug):
     if request.method == "POST":
