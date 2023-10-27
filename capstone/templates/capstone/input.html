@@ -41,7 +41,7 @@
                        
                     </div>
                     <div id="linksContainer">
-                        <a href="#" class="link list-group-item ms-1 px-1 py-1" target="_blank" rel="noopener noreferrer">######## <i class="fas fa-external-link-alt fa-xxs" title="Will open in a new tab"></i></a>
+                        <a href="#" class="link list-group-item ms-1 px-1 py-1" target="_blank" rel="noopener noreferrer">##########<i class="fas fa-external-link-alt fa-xxs" title="Will open in a new tab"></i></a>
                     </div>
                 </div>
                 <div class='col col-sm-4 col-md-12 mb-3 list-group list-group-flush'>
@@ -52,7 +52,7 @@
 
                     </div>
                     <div id="notesContainer">
-                        <a href="#" class="link list-group-item ms-1 px-1 py-2">DENEME <i class="fas fa-chevron-circle-right fa-xxs"></i></a>
+                        <a href="#" class="link list-group-item ms-1 px-1 py-2">##########<i class="fas fa-chevron-circle-right fa-xxs"></i></a>
                     </div>
                 </div>
             </div>
@@ -261,6 +261,8 @@
         fetch("{% url 'get_sites' input.id %}")
             .then(response => response.json())
             .then(data => {
+                const linksContainer = document.getElementById("linksContainer");
+                linksContainer.innerHTML = "";
                 data.sites.forEach(site => {
                 if (site.name.includes("devdocs") || site.url.includes("devdocs")) {
                     const iframe = document.createElement("iframe");
@@ -289,6 +291,22 @@
         });
     });
 
+
+    fetch("{% url 'get_notes' input.id %}")
+    .then(response => response.json())
+    .then(data => {
+        const notesContainer = document.getElementById("notesContainer");
+        notesContainer.innerHTML = "";
+        data.notes.forEach(note => {
+            const noteElement = document.createElement("a");
+            noteElement.href = "#";
+            noteElement.className = "link list-group-item ms-1 px-1 py-2";
+            noteElement.innerHTML = `${note.title} <i class="fas fa-chevron-circle-right fa-xxs"></i>`;
+            noteElement.style.backgroundColor = "#F2F2F2"
+            notesContainer.appendChild(noteElement);
+        });
+    });
+    
 
     });
 </script>

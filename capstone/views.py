@@ -63,6 +63,7 @@ def get_notes(request, id):
     data = {
         "notes": [{"title": note.title, "content": note.content} for note in notes]
     }
+    return JsonResponse(data)
 
 
 def addNote(request, id, slug):
