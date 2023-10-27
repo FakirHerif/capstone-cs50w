@@ -76,7 +76,7 @@
                 <div id="notesContent" style="display: none;">
                     {% if user.is_authenticated %}
                     <div class="card border-warning mb-3 ms-0 mt-0" style="width: 100%;">
-                        <div class="card-header">YOUR NOTE</div>
+                        <div class="card-header" id="notesContentOwner">{{ note.owner.username }} NOTE</div>
                         <div class="card-body mt-0 pt-0">
                             <h4 class="card-title" id="notesContentTitle" style="color: red; font-weight: bold;">Note Title</h4>
                             <div class="card-text" id="notesContentContent">Note Content</div>
@@ -374,6 +374,9 @@
                     }
                     if (notesContentContent) {
                         notesContentContent.innerHTML = `${selectedNote.content}`;
+                    }
+                    if (notesContentOwner) {
+                        notesContentOwner.innerHTML = `Posted by <strong>${selectedNote.owner}</strong>`;
                     }
                 }
             }
