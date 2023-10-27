@@ -52,7 +52,7 @@
 
                     </div>
                     <div id="notesContainer">
-                        <a href="#" class="link list-group-item ms-1 px-1 py-2">##########<i class="fas fa-chevron-circle-right fa-xxs"></i></a>
+                        <a href="#" class="link list-group-item ms-1 px-1 py-2">{{ note.title }}<i class="fas fa-chevron-circle-right fa-xxs"></i></a>
                     </div>
                 </div>
             </div>
@@ -68,19 +68,21 @@
                 <p id="contentText">{{ input.content }}</p>
                 <div id="iframe"></div>
 
-
-                <div id="notesContent">
+                
+                <div id="notesContent" style="display: none;">
+                    {% if user.is_authenticated %}
                     <div class="card border-light">
-                        <h4 class="card-header bg-light bg-gradient text-secondary note_title">1</h4>
-                        <div class="card-body note_body">deneme</div>
+                        <h4 class="card-header bg-light bg-gradient text-secondary note_title" id="notesContentTitle">Note Title</h4>
+                        <div class="card-body note_body" id="notesContentContent">Note Content</div>
                         <div class="card-footer bg-light">
-                            <button type='button' name='note_edit' class='btn btn-sm btn-warning' data-status='edit'><i class="far fa-edit"></i> edit</button>
-                            <button type='button' name='note_delete' class='btn btn-sm btn-danger'><i class="far fa-trash-alt"></i> delete</button>
+                            <button type="button" name="note_edit" class="btn btn-sm btn-warning" data-status="edit"><i class="far fa-edit"></i> edit</button>
+                            <button type="button" name="note_delete" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i> delete</button>
                         </div>
                     </div>
+                    {% else %}
+                    <h1>----LOGIN----</h1>
+                    {% endif %}
                 </div>
-
-
                 <div id="siteFormContainer" style="display: none;">
                     <h3>Create New Site</h3>
                     {% if user.is_authenticated %}
@@ -148,11 +150,15 @@
         const noteFormContainer = document.getElementById("noteFormContainer");
         const cancelNoteButton = document.getElementById("cancelNoteButton");
 
+        const notesContent = document.getElementById("notesContent");
+        const notesContainer = document.getElementById("notesContainer");
+
         addNoteButton.addEventListener("click", function() {
             noteFormContainer.style.display = "block";
             siteFormContainer.style.display = "none";
             contentText.style.display = "none";
             iframeContainer.style.display = "none";
+            notesContent.style.display = "none";
             formVisible = true;
         });
 
@@ -162,6 +168,7 @@
             iframeContainer.style.display = "block";
             formVisible = false;
             noteFormContainer.style.display = "none";
+            notesContent.style.display = "none";
         });
         
         addSiteButton.addEventListener("click", function() {
@@ -170,6 +177,7 @@
             iframeContainer.style.display = "none";
             formVisible = true;
             noteFormContainer.style.display = "none";
+            notesContent.style.display = "none";
         });
 
         cancelButton.addEventListener("click", function() {
@@ -178,6 +186,7 @@
             iframeContainer.style.display = "block";
             formVisible = false;
             noteFormContainer.style.display = "none";
+            notesContent.style.display = "none";
         });
 
         const addSiteForm = document.getElementById("siteForm");
@@ -196,7 +205,7 @@
 
                 if (siteURL.includes("devdocs") || extractedSiteName.includes("devdocs")) {
 
-                    const iframe = document.createElement("iframe");
+                const iframe = document.createElement("iframe");
                 iframe.src = siteURL;
                 iframe.style.width = "100%";
                 iframe.style.height = "500px";
@@ -299,14 +308,64 @@
         notesContainer.innerHTML = "";
         data.notes.forEach(note => {
             const noteElement = document.createElement("a");
-            noteElement.href = "#";
             noteElement.className = "link list-group-item ms-1 px-1 py-2";
             noteElement.innerHTML = `${note.title} <i class="fas fa-chevron-circle-right fa-xxs"></i>`;
             noteElement.style.backgroundColor = "#F2F2F2"
+            noteElement.href = "#"
             notesContainer.appendChild(noteElement);
         });
     });
     
+
+    fetch(`{% url 'get_notes' input.id %}`)
+    .then(response => response.json())
+    .then(data => {
+        const notesData = data;
+
+        document.getElementById("notesContainer").addEventListener("click", function(event) {
+            notesContent.style.display = "block";
+            contentText.style.display = "none";
+            iframeContainer.style.display = "none";
+            formVisible = true;
+            noteFormContainer.style.display = "none";
+            siteFormContainer.style.display = "none";
+            if (event.target.tagName === "A") {
+                event.preventDefault(); 
+                const noteTitle = event.target.textContent.trim();
+                const notesContent = document.getElementById("notesContent");
+                const notesContentContent = document.getElementById("notesContentContent");
+                const notesContentTitle = document.getElementById("notesContentTitle");
+
+                const selectedNote = notesData.notes.find(note => note.title === noteTitle);
+
+                if (selectedNote) {
+
+                    if (notesContentTitle) {
+                        notesContentTitle.innerHTML = `${selectedNote.title}`;
+                    }
+                    if (notesContentContent) {
+                        notesContentContent.innerHTML = `${selectedNote.content}`;
+                    }
+                }
+            }
+        });
+    });
+
+    linksContainer.addEventListener("click", function(event) {
+    if (event.target.tagName === "A") {
+        const clickedLink = event.target;
+
+        if (clickedLink.textContent.includes("devdocs")) {
+            siteFormContainer.style.display = "none";
+            contentText.style.display = "block";
+            iframeContainer.style.display = "block";
+            formVisible = false;
+            noteFormContainer.style.display = "none";
+            notesContent.style.display = "none";
+        }
+    }
+});
+
 
     });
 </script>

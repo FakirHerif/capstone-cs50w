@@ -18,5 +18,5 @@ urlpatterns = [
     path('add_site/<int:id>/<slug:slug>/', views.addSite, name='add_site'),
     path('add_note/<int:id>/<slug:slug>/', views.addNote, name='add_note'),
     path('get_sites/<int:id>/', views.get_sites, name='get_sites'),
-    path('get_notes/<int:id>/', views.get_notes, name='get_notes')
+    path('get_notes/<int:id>/', views.get_notes, name='get_notes'),
 ]

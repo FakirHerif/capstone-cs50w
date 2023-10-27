@@ -29,10 +29,12 @@ def input(request, id, slug):
     inputData = Input.objects.get(pk=id)
     isInputInBookmark = request.user in inputData.bookmark.all()
     allComments = Comment.objects.filter(input=inputData)
+    allNotes = Note.objects.filter(input=inputData)
     return render(request, "capstone/input.html", {
         "input": inputData,
         "isInputInBookmark": isInputInBookmark,
-        "allComments": allComments
+        "allComments": allComments,
+        "allNotes": allNotes
     })
 
 
@@ -61,7 +63,7 @@ def get_notes(request, id):
     input_data = get_object_or_404(Input, pk=id)
     notes = Note.objects.filter(input=input_data)
     data = {
-        "notes": [{"title": note.title, "content": note.content} for note in notes]
+        "notes": [{"title": note.title, "content": note.content, "id": note.id} for note in notes]
     }
     return JsonResponse(data)
 
