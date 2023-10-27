@@ -59,7 +59,11 @@
         </aside>
         <main id="mc" class='col-sm-12 col-md-9 col-xl-10 px-2 p-sm-0'>
             <div>
-                <div class="d-flex">
+                <div class="d-flex" style="align-items: center; 
+                text-align: center; 
+                display: flex;
+                justify-content: center;
+                margin-bottom: 20px;">
                     {% if input.category.categoryImage %}
                         <img src="{{ input.category.categoryImage.url }}" alt="{{ input.category.categoryName }}" style="width: 50px; height: 50px;">
                     {% endif %}
@@ -71,9 +75,12 @@
                 
                 <div id="notesContent" style="display: none;">
                     {% if user.is_authenticated %}
-                    <div class="card border-light">
-                        <h4 class="card-header bg-light bg-gradient text-secondary note_title" id="notesContentTitle">Note Title</h4>
-                        <div class="card-body note_body" id="notesContentContent">Note Content</div>
+                    <div class="card border-warning mb-3 ms-0 mt-0" style="width: 100%;">
+                        <div class="card-header">YOUR NOTE</div>
+                        <div class="card-body mt-0 pt-0">
+                            <h4 class="card-title" id="notesContentTitle" style="color: red; font-weight: bold;">Note Title</h4>
+                            <div class="card-text" id="notesContentContent">Note Content</div>
+                        </div>
                         <div class="card-footer bg-light">
                             <button type="button" name="note_edit" class="btn btn-sm btn-warning" data-status="edit"><i class="far fa-edit"></i> edit</button>
                             <button type="button" name="note_delete" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i> delete</button>

@@ -12,8 +12,6 @@
             <tr>
               <th>Total <strong style="color: red;">{% if selected_category %}{{ selected_category }}{% else %}All Categories{% endif %}</strong> Topics: {{ input|length }}</th>
                 <th></th>
-                <th></th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -33,7 +31,7 @@
                     </a>
                     </div>
                 </td>
-                    {% cycle '' '' '' '</tr><tr>' %} {# Her iki öğe sonrasında yeni satır açmak için cycle kullanılır.... ***BUNU UNUTMA!*** #}
+                    {% cycle '' '</tr><tr>' %} {# Her iki öğe sonrasında yeni satır açmak için cycle kullanılır.... ***BUNU UNUTMA!*** #}
                 {% endfor %}
             </tr>
         </tbody>
