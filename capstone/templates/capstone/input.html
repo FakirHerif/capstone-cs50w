@@ -138,6 +138,28 @@
             </div>
         </main>
     </div>
+
+
+    <h2>Comments</h2>
+{% if user.is_authenticated %}
+    <form action="{% url 'addComment' id=input.id slug=input.title|slugify %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="">Add Comment</label>
+            <input type="text" name="newComment" placeholder="Add new comment" id="">
+            <button type="submit" class="btn btn-warning">Add</button>
+        </div>
+    </form>
+{% endif %}
+<ul class="list-group">
+{% for comment in allComments %}
+    <li class="list-group-item">Comment: {{ comment.message }}
+        <br>
+        <p>Posted by <strong style="color: red;">{{ comment.author }}</strong></p>
+    </li>
+{% endfor %}
+</ul>
+
 </div>
 
 
