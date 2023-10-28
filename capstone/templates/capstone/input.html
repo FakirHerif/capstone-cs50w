@@ -89,6 +89,7 @@
                         <div class="card-footer bg-light" id="noteButtons">
                             <button id="note_edit" type="button" class="btn btn-sm btn-warning note_edit" data-note-id="{{ note.id }}" style="display: none;"><i class="far fa-edit"></i> edit</button>
                             <button id="note_delete" type="button" class="btn btn-sm btn-danger note_delete" data-note-id="{{ note.id }}" style="display: none;"><i class="far fa-trash-alt"></i> delete</button>
+                            <button id="note_save" type="button" class="btn btn-sm btn-success note_save" data-note-id="{{ note.id }}" style="display: none;"><i class="far fa-save"></i> save</button>`
                         </div>
                        
                     </div>
@@ -393,7 +394,9 @@
                         notesContentButtons.innerHTML = `
                         <button id="note_edit" type="button" class="btn btn-sm btn-warning" data-note-id="{{ note.id }}"><i class="far fa-edit"></i> edit ${selectedNote.id}</button>
                         
-                        <button id="note_delete" type="button" class="btn btn-sm btn-danger" data-note-id="{{ note.id }}"><i class="far fa-trash-alt"></i> delete ${selectedNote.id}</button>`;
+                        <button id="note_delete" type="button" class="btn btn-sm btn-danger" data-note-id="{{ note.id }}"><i class="far fa-trash-alt"></i> delete ${selectedNote.id}</button>
+                        
+                        <button id="note_save" type="button" class="btn btn-sm btn-success" data-note-id="{{ note.id }}"><i class="far fa-save"></i> Save ${selectedNote.id}</button>`;
                     }
 
                     noteElement = event.target;
@@ -406,6 +409,11 @@
                     const deleteButtons = document.getElementById("note_delete");
                         deleteButtons.addEventListener("click", function() {
                         console.log("Delete button clicked !!! ");
+                    }); 
+
+                    const saveButtons = document.getElementById("note_save");
+                        saveButtons.addEventListener("click", function() {
+                        console.log("Save button clicked !!! ");
                     }); 
 
                     var csrftoken = "{{ csrf_token }}";

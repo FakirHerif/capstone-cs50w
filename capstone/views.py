@@ -81,7 +81,27 @@ def delete_note(request, note_id):
 
     except Note.DoesNotExist:
         return JsonResponse({'error': 'Note not found.'}, status=404)
-   
+    
+
+
+@login_required
+def edit_note(request, note_id):
+    try:
+        note = Note.objects.get(id=note_id)
+
+        if request.user == note.owner:
+            if request.method == "POST":
+                note.title = request.POST.get("note_title")
+                note.content = request.POST.get("note_content")
+                note.save()
+                return JsonResponse({'message': 'The note has been edited successfully.'})
+
+            return JsonResponse({'note_id': note.id, 'note_title': note.title, 'note_content': note.content})
+
+        return JsonResponse({'error': 'You are not the owner of this note, so you cannot edit it.'}, status=403)
+
+    except Note.DoesNotExist:
+        return JsonResponse({'error': 'Note not found.'}, status=404)
 
 
 def addNote(request, id, slug):

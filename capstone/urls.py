@@ -20,4 +20,5 @@ urlpatterns = [
     path('get_sites/<int:id>/', views.get_sites, name='get_sites'),
     path('get_notes/<int:id>/', views.get_notes, name='get_notes'),
     path('delete_note/<int:note_id>/', views.delete_note, name='delete_note'),
+    path('edit_note/<int:note_id>/', views.edit_note, name='edit_note'),
 ]
