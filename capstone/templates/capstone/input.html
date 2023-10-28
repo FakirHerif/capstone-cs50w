@@ -58,6 +58,10 @@
             </div>
         </aside>
         <main id="mc" class='col-sm-12 col-md-9 col-xl-10 px-2 p-sm-0'>
+            <div class="alert" style="display: none;">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <h5 id="alertMsg"><strong>DELETED !!!</strong> The note has been deleted successfully.</h5>
+            </div>
             <div>
                 <div class="d-flex" style="align-items: center; 
                 text-align: center; 
@@ -421,10 +425,19 @@
                 })
                 .then(response => {
                     if (response.ok) {
-                        alert('The note has been deleted successfully.');
+                        const deletemsg = document.getElementsByClassName("alert")[0];
+                        deletemsg.style.display = "block";
+                        notesContent.style.display ="none";
+                        contentText.style.display = "block";
+                        iframeContainer.style.display = "block";
+                        
                         notesContainer.removeChild(noteElement);
                     } else if (response.status === 403) {
-                        alert('You are not the owner of this note, so you cannot delete it.');
+                        const deletemsg = document.getElementsByClassName("alert")[0];
+                        deletemsg.style.display = "block";
+                        const alertmsg = document.getElementById("alertMsg");
+                        alertmsg.innerHTML = "You are not the owner of this note, so you cannot delete it."
+
                     } else {
                         alert('Error!!! Note deletion failed.');
                     }
@@ -433,7 +446,7 @@
                     console.error('Error:', error);
                 });
                 } else {
-                    alert('Transaction canceled.');
+                    console.log('Transaction canceled.');
                 }
             });
                 }

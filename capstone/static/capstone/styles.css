@@ -62,3 +62,35 @@ footer {
     padding: 10px 20px;
     border-radius: 5px;
 }
+
+
+
+
+.alert {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+  text-align: center;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
+
+.danger {
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+    text-align: center;
+  }
