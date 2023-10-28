@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.utils.text import slugify
+from django.contrib.auth.decorators import login_required
 
 from .models import User, Category, Input, Comment, Site, Note
 
@@ -66,6 +67,21 @@ def get_notes(request, id):
         "notes": [{"title": note.title, "content": note.content, "id": note.id,  "owner": note.owner.username} for note in notes]
     }
     return JsonResponse(data)
+
+@login_required
+def delete_note(request, note_id):
+    try:
+        note = Note.objects.get(id=note_id)
+
+        if request.user == note.owner:
+            note.delete()
+            return JsonResponse({'message': 'The note has been deleted successfully.'})
+        else:
+            return JsonResponse({'error': 'You are not the owner of this note, so you cannot delete it.'}, status=403)
+
+    except Note.DoesNotExist:
+        return JsonResponse({'error': 'Note not found.'}, status=404)
+   
 
 
 def addNote(request, id, slug):

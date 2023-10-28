@@ -352,6 +352,9 @@
     .then(response => response.json())
     .then(data => {
         const notesData = data;
+        const notesContainer = document.getElementById("notesContainer");
+
+        let noteElement;
 
         document.getElementById("notesContainer").addEventListener("click", function(event) {
             notesContent.style.display = "block";
@@ -389,15 +392,50 @@
                         <button id="note_delete" type="button" class="btn btn-sm btn-danger" data-note-id="{{ note.id }}"><i class="far fa-trash-alt"></i> delete ${selectedNote.id}</button>`;
                     }
 
-                const editButtons = document.getElementById("note_edit");
-                    editButtons.addEventListener("click", function() {
-                    console.log("Edit button clicked !!! ");
-                });
+                    noteElement = event.target;
 
-                const deleteButtons = document.getElementById("note_delete");
-                    deleteButtons.addEventListener("click", function() {
-                    console.log("Delete button clicked !!! ");
-                }); 
+                    const editButtons = document.getElementById("note_edit");
+                    editButtons.addEventListener("click", function() {
+                        console.log("Edit button clicked !!! ");
+                    });
+
+                    const deleteButtons = document.getElementById("note_delete");
+                        deleteButtons.addEventListener("click", function() {
+                        console.log("Delete button clicked !!! ");
+                    }); 
+
+                    var csrftoken = "{{ csrf_token }}";
+
+                    const deleteNoteButton = document.getElementById("note_delete");
+
+                    deleteNoteButton.addEventListener("click", function () {
+                    const noteId = selectedNote.id;
+                    const noteOwner = selectedNote.owner;
+                    const confirmed = confirm(`Are you sure you want to delete the note?`);
+                        if (confirmed) {
+                    fetch(`/delete_note/${noteId}/`, {
+                    method: 'DELETE',
+                    headers: {
+                    'X-CSRFToken': csrftoken,
+                    },
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('The note has been deleted successfully.');
+                        notesContainer.removeChild(noteElement);
+                    } else if (response.status === 403) {
+                        alert('You are not the owner of this note, so you cannot delete it.');
+                    } else {
+                        alert('Error!!! Note deletion failed.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+                } else {
+                    alert('Transaction canceled.');
+                }
+            });
                 }
             }
         });
