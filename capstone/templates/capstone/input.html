@@ -76,15 +76,17 @@
                 <div id="notesContent" style="display: none;">
                     {% if user.is_authenticated %}
                     <div class="card border-warning mb-3 ms-0 mt-0" style="width: 100%;">
-                        <div class="card-header" id="notesContentOwner">{{ note.owner.username }} NOTE</div>
+                        <div class="card-header" id="notesContentOwner">{{ note.owner.username }} NOTE +++ {{ note.id }}</div>
                         <div class="card-body mt-0 pt-0">
                             <h4 class="card-title" id="notesContentTitle" style="color: red; font-weight: bold;">Note Title</h4>
                             <div class="card-text" id="notesContentContent">Note Content</div>
                         </div>
-                        <div class="card-footer bg-light">
-                            <button type="button" name="note_edit" class="btn btn-sm btn-warning" data-status="edit"><i class="far fa-edit"></i> edit</button>
-                            <button type="button" name="note_delete" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i> delete</button>
+                     
+                        <div class="card-footer bg-light" id="noteButtons">
+                            <button id="note_edit" type="button" class="btn btn-sm btn-warning note_edit" data-note-id="{{ note.id }}" style="display: none;"><i class="far fa-edit"></i> edit</button>
+                            <button id="note_delete" type="button" class="btn btn-sm btn-danger note_delete" data-note-id="{{ note.id }}" style="display: none;"><i class="far fa-trash-alt"></i> delete</button>
                         </div>
+                       
                     </div>
                     {% else %}
                     <h1>----LOGIN----</h1>
@@ -365,6 +367,8 @@
                 const notesContentContent = document.getElementById("notesContentContent");
                 const notesContentTitle = document.getElementById("notesContentTitle");
 
+                const notesContentButtons = document.getElementById("noteButtons");
+
                 const selectedNote = notesData.notes.find(note => note.title === noteTitle);
 
                 if (selectedNote) {
@@ -376,8 +380,24 @@
                         notesContentContent.innerHTML = `${selectedNote.content}`;
                     }
                     if (notesContentOwner) {
-                        notesContentOwner.innerHTML = `Posted by <strong>${selectedNote.owner}</strong>`;
+                        notesContentOwner.innerHTML = `Posted by <strong>${selectedNote.owner}</strong> + ID: ${selectedNote.id}`;
                     }
+                    if (notesContentButtons) {
+                        notesContentButtons.innerHTML = `
+                        <button id="note_edit" type="button" class="btn btn-sm btn-warning" data-note-id="{{ note.id }}"><i class="far fa-edit"></i> edit ${selectedNote.id}</button>
+                        
+                        <button id="note_delete" type="button" class="btn btn-sm btn-danger" data-note-id="{{ note.id }}"><i class="far fa-trash-alt"></i> delete ${selectedNote.id}</button>`;
+                    }
+
+                const editButtons = document.getElementById("note_edit");
+                    editButtons.addEventListener("click", function() {
+                    console.log("Edit button clicked !!! ");
+                });
+
+                const deleteButtons = document.getElementById("note_delete");
+                    deleteButtons.addEventListener("click", function() {
+                    console.log("Delete button clicked !!! ");
+                }); 
                 }
             }
         });
@@ -397,8 +417,6 @@
         }
     }
 });
-
-
-    });
+});
 </script>
 {% endblock %}
