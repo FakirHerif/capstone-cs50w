@@ -64,7 +64,7 @@ def get_notes(request, id):
     input_data = get_object_or_404(Input, pk=id)
     notes = Note.objects.filter(input=input_data)
     data = {
-        "notes": [{"title": note.title, "content": note.content, "id": note.id,  "owner": note.owner.username} for note in notes]
+        "notes": [{"title": note.title, "content": note.content, "id": note.id,  "owner": note.owner.username, "date_posted": note.date_posted} for note in notes]
     }
     return JsonResponse(data)
 

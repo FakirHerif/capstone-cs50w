@@ -163,7 +163,7 @@
     {% for comment in allComments %}
     <li class="list-group-item">Comment: {{ comment.message }}
         <br>
-        <p>Posted by <strong style="color: red;">{{ comment.author }}</strong></p>
+        <p>Posted by <strong style="color: red;">{{ comment.author }}</strong> on Posted by admin on {{ comment.date_posted }}</p>
     </li>
 {% endfor %}
 </ul>
@@ -389,7 +389,13 @@
                         notesContentContent.innerHTML = `${selectedNote.content}`;
                     }
                     if (notesContentOwner) {
-                        notesContentOwner.innerHTML = `Posted by <strong>${selectedNote.owner}</strong> + ID: ${selectedNote.id}`;
+
+
+                        const datePosted = new Date(selectedNote.date_posted);
+                        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' };
+                        const formattedDate = datePosted.toLocaleDateString('en-US', options);
+
+                        notesContentOwner.innerHTML = `Posted by <strong>${selectedNote.owner}</strong> on ${formattedDate}`;
                     }
                     if (notesContentButtons) {
                         notesContentButtons.innerHTML = `
