@@ -169,6 +169,7 @@
             {% if user.is_authenticated %}
                 {% if user.username == comment.author.username %}
                     <button class="edit-comment-button" data-comment-id="{{ comment.id }}">Edit ++++ {{ comment.id }}</button>
+                    <button class="delete-comment-button" data-comment-id="{{ comment.id }}">Delete ++++ {{ comment.id }}</button>
                 {% endif %}
             {% endif %}
         </div>

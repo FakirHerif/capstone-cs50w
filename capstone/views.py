@@ -179,6 +179,21 @@ def edit_comment(request, id):
 
 
 
+@login_required
+def delete_comment(request, comment_id):
+    try:
+        comment = Comment.objects.get(id=comment_id)
+
+        if request.user == comment.author:
+            comment.delete()
+            return JsonResponse({'message': 'The comment has been deleted successfully.'})
+        else:
+            return JsonResponse({'error': 'You are not the owner of this comment, so you cannot delete it.'}, status=403)
+
+    except Comment.DoesNotExist:
+        return JsonResponse({'error': 'Comment not found.'}, status=404)
+
+
 
 def displayBookmark(request):
     currentUser = request.user
