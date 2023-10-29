@@ -19,6 +19,8 @@ urlpatterns = [
     path('add_note/<int:id>/<slug:slug>/', views.addNote, name='add_note'),
     path('get_sites/<int:id>/', views.get_sites, name='get_sites'),
     path('get_notes/<int:id>/', views.get_notes, name='get_notes'),
+    path('get_comments/<int:id>/', views.get_comments, name='get_comments'),
     path('delete_note/<int:note_id>/', views.delete_note, name='delete_note'),
     path('edit_note/<int:note_id>/', views.edit_note, name='edit_note'),
+    path('edit_comment/<int:id>/', views.edit_comment, name='edit_comment'),
 ]

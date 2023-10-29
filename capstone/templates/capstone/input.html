@@ -161,11 +161,17 @@
 {% endif %}
 <ul id="comment-list" class="list-group">
     {% for comment in allComments %}
-    <li class="list-group-item">Comment: {{ comment.message }}
-        <br>
-        <p>Posted by <strong style="color: red;">{{ comment.author }}</strong> on Posted by admin on {{ comment.date_posted }}</p>
+    <li class="list-group-item">
+        <div class="comment-container">
+            <p class="comment-message">Comment: <span>{{ comment.message }}</span></p>
+            <p>Posted by <strong style="color: red;">{{ comment.author }}</strong> on {{ comment.date_posted }}</p>
+            {% if user.is_authenticated%}
+            <button class="edit-comment-button" data-comment-id="{{ comment.id }}">Edit ++++ {{ comment.id }}</button>
+            <button class="save-comment-button" data-comment-id="{{ comment.id }}" style="display: none;">Save</button>
+            {% endif %}
+        </div>
     </li>
-{% endfor %}
+    {% endfor %}
 </ul>
 
 </div>
@@ -541,9 +547,56 @@
     }
 });
 
+const editCommentElements = document.querySelectorAll(".edit-comment-button");
+const saveCommentElements = document.querySelectorAll(".save-comment-button");
+const commentMessages = document.querySelectorAll(".comment-message span");
 
+editCommentElements.forEach((editCommentElement, index) => {
+    editCommentElement.addEventListener("click", () => {
+        
+        editCommentElement.style.display = "none";
+        saveCommentElements[index].style.display = "block";
 
+        commentMessages[index].contentEditable = true;
+        commentMessages[index].focus();
+    });
 
+    saveCommentElements[index].addEventListener("click", () => {
+        saveCommentElements[index].style.display = "none";
+        editCommentElement.style.display = "block";
+
+        commentMessages[index].contentEditable = false;
+
+        const editedMessage = commentMessages[index].textContent;
+
+        const commentId = editCommentElement.getAttribute("data-comment-id");
+        saveEditedComment(commentId, editedMessage);
+    });
+});
+
+function saveEditedComment(commentId, editedMessage) {
+
+    const csrftoken = "{{ csrf_token }}";
+
+    fetch(`/edit_comment/${commentId}/`, {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": csrftoken,
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `message=${encodeURIComponent(editedMessage)}`
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                console.log("DONE !!!!!!!!!!!!!!");
+                console.log(data.message);
+            } else if (data.error) {
+                console.log("ERRORRRRRRRRRRRRRRRRRR.......");
+                console.error(data.error);
+                }
+            });
+    }
 });
 </script>
 {% endblock %}

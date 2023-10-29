@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.utils.text import slugify
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
 from .models import User, Category, Input, Comment, Site, Note
 
@@ -67,6 +68,26 @@ def get_notes(request, id):
         "notes": [{"title": note.title, "content": note.content, "id": note.id,  "owner": note.owner.username, "date_posted": note.date_posted} for note in notes]
     }
     return JsonResponse(data)
+
+
+def get_comments(request, id):
+    input_data = get_object_or_404(Input, pk=id)
+    comments = Comment.objects.filter(input=input_data)
+    data = {
+        "comments": [
+            {
+                "id": comment.id,
+                "author": comment.author.username,
+                "input": comment.input.title,
+                "message": comment.message,
+                "category": comment.category.categoryName if comment.category else None,
+                "date_posted": comment.date_posted
+            }
+            for comment in comments
+        ]
+    }
+    return JsonResponse(data)
+
 
 @login_required
 def delete_note(request, note_id):
@@ -132,10 +153,31 @@ def addComment(request, id, slug):
         message = message,
         category = categoryData,
     )
-
     newComment.save()
-
     return HttpResponseRedirect(reverse("input", args=(id, slug)))
+
+
+@login_required
+def edit_comment(request, id):
+    try:
+        comment = Comment.objects.get(id=id)
+
+        if request.user == comment.author:
+            if request.method == "POST":
+                new_message = request.POST.get('message')
+                comment.message = new_message
+                comment.date_modified = timezone.now()
+                comment.save()
+                return JsonResponse({'message': 'The comment has been edited successfully.'})
+
+            return JsonResponse({'comment_id': comment.id, 'comment_message': comment.message, 'date_modified': comment.date_modified.strftime("%b. %d, %Y, %I:%M %p")})
+
+        return JsonResponse({'error': 'You are not the owner of this comment, so you cannot edit it.'}, status=403)
+
+    except Note.DoesNotExist:
+        return JsonResponse({'error': 'Comment not found.'}, status=404)
+
+
 
 
 def displayBookmark(request):
