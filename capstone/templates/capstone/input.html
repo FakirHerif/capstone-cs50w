@@ -168,8 +168,8 @@
             <p>Posted by <strong style="color: red;">{{ comment.author }}</strong> on {{ comment.date_posted }}</p>
             {% if user.is_authenticated %}
                 {% if user.username == comment.author.username %}
-                    <button class="edit-comment-button" data-comment-id="{{ comment.id }}">Edit ++++ {{ comment.id }}</button>
                     <button class="delete-comment-button" data-comment-id="{{ comment.id }}">Delete ++++ {{ comment.id }}</button>
+                    <button class="edit-comment-button" data-comment-id="{{ comment.id }}">Edit ++++ {{ comment.id }}</button>
                 {% endif %}
             {% endif %}
         </div>
@@ -599,6 +599,48 @@ function saveEditedComment(commentId, editedMessage) {
                 console.error("Error:", data.error);
             }
         });
-    }})
+    }
+    
+    const deleteCommentElements = document.querySelectorAll(".delete-comment-button");
+
+    deleteCommentElements.forEach((deleteCommentElement) => {
+        deleteCommentElement.addEventListener("click", (event) => {
+            event.preventDefault();
+            
+            const commentId = deleteCommentElement.getAttribute("data-comment-id");
+            
+            const isConfirmed = confirm("Bu yorumu silmek istediğinizden emin misiniz?");
+            
+            if (isConfirmed) {
+                deleteComment(commentId);
+            }
+        });
+    });
+
+    function deleteComment(commentId) {
+        const csrftoken = "{{ csrf_token }}";
+
+        fetch(`/delete_comment/${commentId}/`, {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": csrftoken,
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.message) {
+                console.log("Yorum başarıyla silindi.");
+                
+                const commentElement = document.getElementById(`comment-${commentId}`);
+                if (commentElement) {
+                    commentElement.parentElement.parentElement.remove();
+                }
+            } else if (data.error) {
+                console.error("Hata:", data.error);
+            }
+        });
+    }
+    });
 </script>
 {% endblock %}
