@@ -86,3 +86,85 @@ footer {
 .closebtn:hover {
   color: black;
 }
+
+#comment-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#comment-list .list-group-item {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+#comment-form {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+#comment-form label {
+    font-weight: bold;
+}
+
+#comment-form input[type="text"] {
+    width: 100%;
+    padding: 25px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+#comment-form button {
+    background-color: #ffc107;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+
+#comment-list .list-group-item p,
+#comment-list .list-group-item strong {
+    margin: 0; 
+}
+
+
+
+#add-comment-container {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+}
+
+#add-comment-container input[type="text"] {
+    flex: 1;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+#add-comment-container button {
+    background-color: #ffc107;
+    color: #fff;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+#add-comment-container button:hover {
+    background-color: #ffdb58;
+}
+
+#newComment {
+    margin-right: 20px;
+}

@@ -149,17 +149,18 @@
 
     <h2>Comments</h2>
 {% if user.is_authenticated %}
-    <form action="{% url 'addComment' id=input.id slug=input.title|slugify %}" method="POST">
+    <div id="comments-container">
+        <form id="comment-form" action="{% url 'addComment' id=input.id slug=input.title|slugify %}" method="POST">
         {% csrf_token %}
-        <div class="form-group">
-            <label for="">Add Comment</label>
-            <input type="text" name="newComment" placeholder="Add new comment" id="">
+        <label for="newComment">Add New Comment</label>
+        <div class="form-group" id="add-comment-container">
+            <input type="text" name="newComment" placeholder="Add new comment" id="newComment">
             <button type="submit" class="btn btn-warning">Add</button>
         </div>
     </form>
 {% endif %}
-<ul class="list-group">
-{% for comment in allComments %}
+<ul id="comment-list" class="list-group">
+    {% for comment in allComments %}
     <li class="list-group-item">Comment: {{ comment.message }}
         <br>
         <p>Posted by <strong style="color: red;">{{ comment.author }}</strong></p>
