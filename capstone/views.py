@@ -91,12 +91,14 @@ def edit_note(request, note_id):
 
         if request.user == note.owner:
             if request.method == "POST":
-                note.title = request.POST.get("note_title")
-                note.content = request.POST.get("note_content")
+                new_title = request.POST.get('title')
+                new_content = request.POST.get('content')
+                note.title = new_title
+                note.content = new_content
                 note.save()
                 return JsonResponse({'message': 'The note has been edited successfully.'})
 
-            return JsonResponse({'note_id': note.id, 'note_title': note.title, 'note_content': note.content})
+            return JsonResponse({'note_id': note.id, 'note_title': note.title, 'note_content': note.content,})
 
         return JsonResponse({'error': 'You are not the owner of this note, so you cannot edit it.'}, status=403)
 

@@ -399,28 +399,85 @@
                         <button id="note_save" type="button" class="btn btn-sm btn-success" data-note-id="{{ note.id }}"><i class="far fa-save"></i> Save ${selectedNote.id}</button>`;
                     }
 
+                    const noteOwner = `${selectedNote.owner}`;
+                    const authenticatedUser = "{{ user.username }}";
+                    const editButton = document.getElementById("note_edit");
+                    const deleteButton = document.getElementById("note_delete");
+                    const saveButton = document.getElementById("note_save");
+
+            
+                    if (noteOwner != authenticatedUser) {
+                    editButton.style.display = "none";
+                    deleteButton.style.display = "none";
+                    saveButton.style.display = "none";
+                    }
+
                     noteElement = event.target;
 
                     const editButtons = document.getElementById("note_edit");
                     editButtons.addEventListener("click", function() {
                         console.log("Edit button clicked !!! ");
+                        toggleEditability(true);
                     });
 
-                    const deleteButtons = document.getElementById("note_delete");
-                        deleteButtons.addEventListener("click", function() {
-                        console.log("Delete button clicked !!! ");
-                    }); 
-
+                    function toggleEditability(editMode) {
+                        if (editMode) {
+                            notesContentTitle.contentEditable = "true";
+                            notesContentContent.contentEditable = "true";
+                            notesContentTitle.style.border = "2px solid #ccc";
+                            notesContentContent.style.border = "2px solid #ccc";
+                            notesContentTitle.style.backgroundColor = "#fff";
+                            notesContentContent.style.backgroundColor = "#fff";
+                        } else {
+                            notesContentTitle.contentEditable = "false";
+                            notesContentContent.contentEditable = "false";
+                            notesContentTitle.style.border = "none";
+                            notesContentContent.style.border = "none";
+                            notesContentTitle.style.backgroundColor = "transparent";
+                            notesContentContent.style.backgroundColor = "transparent";
+                        }
+                    }
+                   
                     const saveButtons = document.getElementById("note_save");
-                        saveButtons.addEventListener("click", function() {
-                        console.log("Save button clicked !!! ");
-                    }); 
-
+                        
                     var csrftoken = "{{ csrf_token }}";
+
+                    saveButtons.addEventListener("click", function() {
+                        const noteId = selectedNote.id;
+                        const newTitle = notesContentTitle.textContent;
+                        const newContent = notesContentContent.textContent;
+                        console.log("Save button clicked !!! ");
+                        toggleEditability(false);
+
+                        fetch(`/edit_note/${noteId}/`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                                'X-CSRFToken': csrftoken
+                            },
+                            body: `title=${encodeURIComponent(newTitle)}&content=${encodeURIComponent(newContent)}`
+                            
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.error) {
+                                console.error(data.error);
+                                console.log("HATA!!!!!");
+                            } else {
+                                console.log(data.message);
+                                console.log("EDIT BAŞARILI !!!");
+                                window.location.reload();
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                    })
 
                     const deleteNoteButton = document.getElementById("note_delete");
 
                     deleteNoteButton.addEventListener("click", function () {
+                    console.log("Delete button clicked !!! ");
                     const noteId = selectedNote.id;
                     const noteOwner = selectedNote.owner;
                     const confirmed = confirm(`Are you sure you want to delete the note?`);
@@ -476,6 +533,10 @@
         }
     }
 });
+
+
+
+
 });
 </script>
 {% endblock %}
