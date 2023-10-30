@@ -21,7 +21,7 @@
     {% endif %}
 </div>
 
-<button type="submit" class="btn btn-danger">BACK</button>
+<button id="backButton" type="submit" class="btn btn-danger">BACK</button>
 
 
 <div class="container mb-5">
@@ -642,5 +642,14 @@ function saveEditedComment(commentId, editedMessage) {
         });
     }
     });
+
+    document.addEventListener("DOMContentLoaded", function() {
+    const backButton = document.getElementById("backButton");
+
+    backButton.addEventListener("click", function() {
+        window.history.back();
+    });
+});
+
 </script>
 {% endblock %}
