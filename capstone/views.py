@@ -29,6 +29,7 @@ def search(request):
 
 def input(request, id, slug):
     inputData = Input.objects.get(pk=id)
+    categories = Category.objects.all()
     isInputInBookmark = request.user in inputData.bookmark.all()
     allComments = Comment.objects.filter(input=inputData)
     allNotes = Note.objects.filter(input=inputData)
@@ -36,7 +37,8 @@ def input(request, id, slug):
         "input": inputData,
         "isInputInBookmark": isInputInBookmark,
         "allComments": allComments,
-        "allNotes": allNotes
+        "allNotes": allNotes,
+        "categories": categories
     })
 
 
