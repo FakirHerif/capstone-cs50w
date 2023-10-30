@@ -168,3 +168,38 @@ footer {
 #newComment {
     margin-right: 20px;
 }
+
+
+.scroll-to-top-button {
+  position: fixed;
+  bottom: 20px; 
+  right: 20px; 
+  background-color: #007bff;
+  color: #fff; 
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.scroll-to-top-button:hover {
+  background-color: #0056b3;
+}
+
+.scroll-to-bottom-button {
+    position: fixed;
+    bottom: 70px; /* Scroll to Top butonunun üstüne gelecek mesafe */
+    right: 20px;
+    z-index: 9998; /* Scroll to Top butonunun üstünde olmasını sağlar */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .scroll-to-bottom-button:hover {
+    background-color: #0056b3;
+  }
+  
