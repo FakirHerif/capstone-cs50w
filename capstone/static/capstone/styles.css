@@ -227,6 +227,10 @@ footer {
 
 #newComment {
     margin-right: 20px;
+    height: 150px;
+    width: 100%;
+    box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
 }
 
 .scroll-to-top-button {
@@ -247,9 +251,9 @@ footer {
 
 .scroll-to-bottom-button {
     position: fixed;
-    bottom: 70px; /* Scroll to Top butonunun üstüne gelecek mesafe */
+    bottom: 70px;
     right: 20px;
-    z-index: 9998; /* Scroll to Top butonunun üstünde olmasını sağlar */
+    z-index: 9998;
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -261,4 +265,44 @@ footer {
   .scroll-to-bottom-button:hover {
     background-color: #0056b3;
   }
-  
+
+#emoji-container {
+    background-color: #f2f2f2;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 50%;
+    margin: 15px auto; 
+    overflow: auto; 
+    max-height: 500px;
+}
+
+.emoji-box {
+    display: flex;
+    align-items: center;
+    width: 50%;
+}
+
+.emoji-option {
+    font-size: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.emoji-option:active {
+    opacity: 0.5; 
+}
+
+#comment-form {
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.2);;
+    margin-bottom: 20px;
+    box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.2);
+
+}
+
+.comment-message {
+    word-wrap: break-word; /* Kelimeleri kır */
+    white-space: pre-wrap; /* Boşlukları koru */
+}

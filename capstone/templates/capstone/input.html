@@ -155,10 +155,45 @@
         {% csrf_token %}
         <label for="newComment">Add New Comment</label>
         <div class="form-group" id="add-comment-container">
-            <input type="text" name="newComment" placeholder="Add new comment" id="newComment">
+            <textarea type="text" name="newComment" placeholder="Add new comment" id="newComment"></textarea>
             <button type="submit" class="btn btn-warning">Add</button>
         </div>
+        <div id="emoji-container">
+            <div class="emoji-box">
+                <div class="emoji-option">😀</div>
+                <div class="emoji-option">😂</div>
+                <div class="emoji-option">😍</div>
+                <div class="emoji-option">😎</div>
+                <div class="emoji-option">🤣</div>
+                <div class="emoji-option">😇</div>
+                <div class="emoji-option">😊</div>
+                <div class="emoji-option">😆</div>
+                <div class="emoji-option">😁</div>
+                <div class="emoji-option">😃</div>
+                <div class="emoji-option">😄</div>
+                <div class="emoji-option">😋</div>
+                <div class="emoji-option">😜</div>
+                <div class="emoji-option">😏</div>
+                <div class="emoji-option">😌</div>
+                <div class="emoji-option">😢</div>
+                <div class="emoji-option">😥</div>
+                <div class="emoji-option">😭</div>
+                <div class="emoji-option">😡</div>
+                <div class="emoji-option">😤</div>
+                <div class="emoji-option">❤️</div>
+                <div class="emoji-option">👍</div>
+                <div class="emoji-option">🎉</div>
+                <div class="emoji-option">👏</div>
+                <div class="emoji-option">🌟</div>
+                <div class="emoji-option">🔥</div>
+                <div class="emoji-option">🍕</div>
+                <div class="emoji-option">🌸</div>
+                <div class="emoji-option">🎈</div>
+                <div class="emoji-option">🚀</div>
+            </div>
+        </div>
     </form>
+
 {% endif %}
 <ul id="comment-list" class="list-group">
     {% for comment in allComments %}
@@ -677,6 +712,27 @@ scrollBottomButton.addEventListener("click", () => {
   });
 });
 
+document.querySelectorAll('.emoji-option').forEach(function(emojiOption) {
+    emojiOption.addEventListener('click', function() {
+        const emoji = emojiOption.textContent;
+        const newCommentInput = document.getElementById('newComment');
+        newCommentInput.value += emoji;
+    });
+});
 
+
+const emojiOptions = document.querySelectorAll('.emoji-option');
+
+emojiOptions.forEach(emoji => {
+    emoji.addEventListener('click', () => {
+        // Tıkladığınızda küçültme efekti ekleyin
+        emoji.style.transform = 'scale(0.9)';
+        
+        // 0.1 saniye sonra efekti kaldırın
+        setTimeout(() => {
+            emoji.style.transform = 'scale(1)';
+        }, 100);
+    });
+});
 </script>
 {% endblock %}
