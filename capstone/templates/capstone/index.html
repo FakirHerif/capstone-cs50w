@@ -1,7 +1,21 @@
 {% extends "capstone/layout.html" %}
 
 {% block body %}
-    <h2 style= "text-align: center;">FakirCode</h2>
+<div class="animation">
+<h2 style="font-family: 'Courier New', Courier, monospace;">Coding is
+    <div class="scroller">
+      <span>
+        Cool<br/>
+        Art<br/>
+        Intruiging<br/>
+        Challenging
+      </span>
+    </div>
+  </h2>
+</div>
+
+<h2 style= "text-align: center; font-family: 'Courier New', Courier, monospace;font-weight: bold;">FakirCode <img style="width: 75px;" src="static/capstone/base.gif" alt="FakirCode"></h2>
+    
 
     <div class="card-container">
         {% for category in categories %}
@@ -14,7 +28,7 @@
                 <p class="card-text"></p>
             </div>
             <div class="card-footer">
-                <a href="{% url 'displayCategory' %}?category={{ category.categoryName }}" class="btn btn-primary">VIEW CONTENTS</a>
+                <a style="font-weight: bold;" href="{% url 'displayCategory' %}?category={{ category.categoryName }}" class="btn btn-primary">VIEW CONTENTS</a>
             </div>
         </div>
         {% endfor %}

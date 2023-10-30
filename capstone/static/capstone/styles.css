@@ -3,9 +3,34 @@ body {
     background-color: rgba(0, 0, 0, 0.05);
 }
 
+.navbar {
+    background-color: #f2f2f2;
+    box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    color: black;
+}
 
+.navbar .nav-link {
+    color: black;
+    font-weight: bold;
+}
 
+.navbar .form-control {
+    box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.2);
+    color: black;
+    background-color: #ffffff55;
+}
 
+.navbar .btn {
+    box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-item {
+    color: black;
+    font-weight: bold;
+}
 
 footer {
     text-align: center;
@@ -26,8 +51,15 @@ footer {
     margin-bottom: 50px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.2);
     text-align: center;
+    background-color: #ffffff55;
+}
+
+.card-title {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    color: black;
 }
 
 .card img {
@@ -51,8 +83,9 @@ footer {
 
 .card-footer {
     text-align: center;
-    background-color: #f7f7f7;
+    background-color: #f2f2f2;
     padding: 10px;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .btn-primary {
@@ -63,8 +96,38 @@ footer {
     border-radius: 5px;
 }
 
+.animation {
+    position: absolute;
+}
 
+.scroller {
+  height: 1.2em;
+  line-height: 1.2em;
+  position: relative;
+  overflow: hidden;
+  width: 10em;
+}
+.scroller > span {
+  position: absolute;
+  top: 0;
+  animation: slide 5s infinite;
+  font-weight: bold;
+}
 
+@keyframes slide {
+    0% {
+      top: 0;
+    }
+    25% {
+      top: -1.2em;
+    }
+    50% {
+      top: -2.4em;
+    }
+    75% {
+      top: -3.6em;
+    }
+  }
 
 .alert {
   padding: 20px;
@@ -129,13 +192,10 @@ footer {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
-
 #comment-list .list-group-item p,
 #comment-list .list-group-item strong {
     margin: 0; 
 }
-
-
 
 #add-comment-container {
     display: flex;
@@ -169,7 +229,6 @@ footer {
     margin-right: 20px;
 }
 
-
 .scroll-to-top-button {
   position: fixed;
   bottom: 20px; 
@@ -198,7 +257,7 @@ footer {
     border-radius: 4px;
     cursor: pointer;
   }
-  
+
   .scroll-to-bottom-button:hover {
     background-color: #0056b3;
   }

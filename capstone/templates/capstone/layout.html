@@ -13,7 +13,7 @@
     </head>
     <body>
     <div class="container">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
               <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'capstone/img.png' %}" alt="FakirCode" style="height: 75px; width: 75px;"></a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,7 @@
                 </ul>
                 <div style="margin-right: 20px;">
                     {% if user.is_authenticated %}
-                        Signed in as <strong style="color: red;">{{ user.username }}</strong>
+                        Signed in as <strong style="color: red; font-size: 20px;">{{ user.username }}</strong>
                     {% else %}
                         Not signed in.
                     {% endif %}
