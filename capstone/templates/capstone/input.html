@@ -169,8 +169,8 @@
             <p>Posted by <strong style="color: red;">{{ comment.author }}</strong> on {{ comment.date_posted }}</p>
             {% if user.is_authenticated %}
                 {% if user.username == comment.author.username %}
-                    <button class="delete-comment-button" data-comment-id="{{ comment.id }}">Delete ++++ {{ comment.id }}</button>
-                    <button class="edit-comment-button" data-comment-id="{{ comment.id }}">Edit ++++ {{ comment.id }}</button>
+                    <button class="btn btn-sm btn-danger delete-comment-button" data-comment-id="{{ comment.id }}"><i class="far fa-trash-alt"></i> Delete</button>
+                    <button class="btn btn-sm btn-warning edit-comment-button" data-comment-id="{{ comment.id }}" style="color: white;"><i class="far fa-edit"></i> Edit</button>
                 {% endif %}
             {% endif %}
         </div>
@@ -412,7 +412,7 @@
                     }
                     if (notesContentButtons) {
                         notesContentButtons.innerHTML = `
-                        <button id="note_edit" type="button" class="btn btn-sm btn-warning" data-note-id="{{ note.id }}"><i class="far fa-edit"></i> edit ${selectedNote.id}</button>
+                        <button id="note_edit" type="button" class="btn btn-sm btn-warning" data-note-id="{{ note.id }}" style="color: white;"><i class="far fa-edit"></i> edit ${selectedNote.id}</button>
                         
                         <button id="note_delete" type="button" class="btn btn-sm btn-danger" data-note-id="{{ note.id }}"><i class="far fa-trash-alt"></i> delete ${selectedNote.id}</button>
                         
@@ -567,9 +567,14 @@ editCommentElements.forEach((editCommentElement) => {
         editCommentElement.style.display = "none";
         
         const saveButton = document.createElement("button");
-        saveButton.textContent = "Save";
-        saveButton.className = "save-comment-button";
+        saveButton.className = "btn btn-sm btn-success save-comment-button";
+        const saveIcon = document.createElement("i");
+        saveIcon.className = "far fa-save";
+        const saveText = document.createTextNode(" Save");
+        saveButton.appendChild(saveIcon);
+        saveButton.appendChild(saveText);
         commentElement.parentElement.appendChild(saveButton);
+        
         
         saveButton.addEventListener("click", () => {
             commentElement.setAttribute("contenteditable", "false");
