@@ -7,7 +7,7 @@
 {% block body %}
     <h2>Topics</h2>
     <br>
-    <table class="table align-middle mb-0 bg-white">
+    <table id="displayCategoryTable" class="table align-middle mb-0 bg-white">
         <thead class="bg-light">
             <tr>
               <th>Total <strong style="color: red;">{% if selected_category %}{{ selected_category }}{% else %}All Categories{% endif %}</strong> Topics: {{ input|length }}</th>

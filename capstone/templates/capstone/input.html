@@ -150,6 +150,7 @@
 
 
     <h2>Comments</h2>
+    <h2>---YORUM YAZABİLMEK İÇİN GİRİŞ YAPIN!!---</h2>
 {% if user.is_authenticated %}
     <div id="comments-container">
         <form id="comment-form" action="{% url 'addComment' id=input.id slug=input.title|slugify %}" method="POST">
@@ -424,7 +425,7 @@
                 const notesContent = document.getElementById("notesContent");
                 const notesContentContent = document.getElementById("notesContentContent");
                 const notesContentTitle = document.getElementById("notesContentTitle");
-
+                const notesContentOwner = document.getElementById("notesContentOwner");
                 const notesContentButtons = document.getElementById("noteButtons");
 
                 const selectedNote = notesData.notes.find(note => note.title === noteTitle);

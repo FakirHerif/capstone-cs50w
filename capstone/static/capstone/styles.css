@@ -323,3 +323,11 @@ footer {
     margin: 10px;
     font-size: 20px;
 }
+
+#displayCategoryTable {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    border: 1px black solid;
+    box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff55;
+}
