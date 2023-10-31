@@ -271,6 +271,7 @@ def createInput(request):
 
 
 def login_view(request):
+    categories = Category.objects.all()
     if request.method == "POST":
 
         # Attempt to sign user in
@@ -284,10 +285,13 @@ def login_view(request):
             return HttpResponseRedirect(reverse("index"))
         else:
             return render(request, "capstone/login.html", {
-                "message": "Invalid username and/or password."
+                "message": "Invalid username and/or password.",
+                "categories": categories
             })
     else:
-        return render(request, "capstone/login.html")
+        return render(request, "capstone/login.html", {
+            "categories": categories
+        })
 
 
 def logout_view(request):
@@ -296,6 +300,7 @@ def logout_view(request):
 
 
 def register(request):
+    categories = Category.objects.all()
     if request.method == "POST":
         username = request.POST["username"]
         email = request.POST["email"]
@@ -305,7 +310,8 @@ def register(request):
         confirmation = request.POST["confirmation"]
         if password != confirmation:
             return render(request, "capstone/register.html", {
-                "message": "Passwords must match."
+                "message": "Passwords must match.",
+                "categories": categories
             })
 
         # Attempt to create new user
@@ -314,9 +320,12 @@ def register(request):
             user.save()
         except IntegrityError:
             return render(request, "capstone/register.html", {
-                "message": "Username already taken."
+                "message": "Username already taken.",
+                "categories": categories
             })
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
-        return render(request, "capstone/register.html")
+        return render(request, "capstone/register.html", {
+            "categories": categories 
+        })

@@ -156,9 +156,7 @@
 
 
     <h2 style="font-family: 'Courier New', Courier, monospace; font-weight: bold;">Comments</h2>
-    <div class="alert alert-info">
-        <strong>Info!</strong> You should <a href="{% url 'login' %}" class="alert-link">LOGIN</a> to write comment.
-    </div>
+
     <div class="successComment" style="display: none;">
         <span class="successCommentBtn" onclick="this.parentElement.style.display='none';">&times;</span> 
         <h5 id="successComment" style="font-size: 22px;"><strong>SUCCESS !!!</strong> Your comment has been saved successfully.</h5>
@@ -211,6 +209,10 @@
             </div>
         </div>
     </form>
+{% else %}
+    <div class="alert alert-info">
+        <strong>Info!</strong> You should <a href="{% url 'login' %}" class="alert-link">LOGIN</a> to write comment.
+    </div>
 
 {% endif %}
 <ul id="comment-list" class="list-group">
