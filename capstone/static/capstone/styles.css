@@ -385,3 +385,10 @@ footer {
     font-weight: bold;
     font-size: 16px;
 }
+
+.formContainerCreate {
+    max-width: 400px;
+    padding: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
