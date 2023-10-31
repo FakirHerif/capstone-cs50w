@@ -1,18 +1,25 @@
 {% extends "capstone/layout.html" %}
 
 {% block body %}
-    <h2>Search Results:</h2>
-    <p>Search: <strong>{{ query }}</strong></p>
+    <h2 style="font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;">Search Results:</h2>
+    <p style="font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;">Search: <strong>{{ query }}</strong></p>
 
     <ul>
         {% for result in results %}
             <li>
-                <a href="{% url 'input' id=result.id slug=result.title|slugify %}">{{ result.title }}</a>
+                <a href="{% url 'input' id=result.id slug=result.title|slugify %}" style="font-family: 'Courier New', Courier, monospace;
+                font-weight: bold;">{{ result.title }}</a>
             </li>
         {% empty %}
-            <p>Search Results Not Found...</p>
-            <a href="{% url 'create' %}">Click to create a new topic</a>
+            <p style="font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;">Search Results Not Found...</p>
+            <a href="{% url 'create' %}" style="font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;">Click to create a new topic</a>
         {% endfor %}
     </ul>
-    <p>Not what you're looking for? You can add a new entry here.</p>
+    <div class="alert alert-info allWarnings">
+        <strong>Not what you're looking for?</strong> You can add a new entry <a href="{% url 'create' %}" class="alert-link">here.</a>
+    </div>
 {% endblock %}
