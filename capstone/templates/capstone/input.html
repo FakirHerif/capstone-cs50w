@@ -149,8 +149,16 @@
     </div>
 
 
-    <h2>Comments</h2>
+    <h2 style="font-family: 'Courier New', Courier, monospace; font-weight: bold;">Comments</h2>
     <h2>---YORUM YAZABİLMEK İÇİN GİRİŞ YAPIN!!---</h2>
+    <div class="successComment" style="display: none;">
+        <span class="successCommentBtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+        <h5 id="successComment" style="font-size: 22px;"><strong>SUCCESS !!!</strong> Your comment has been saved successfully.</h5>
+    </div>
+    <div class="deleteComment" style="display: none;">
+        <span class="deleteCommentBtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+        <h5 id="deleteComment" style="font-size: 21px;"><strong>DELETED !!!</strong> Your comment has been deleted successfully.</h5>
+    </div>
 {% if user.is_authenticated %}
     <div id="comments-container">
         <form id="comment-form" action="{% url 'addComment' id=input.id slug=input.title|slugify %}" method="POST">
@@ -669,7 +677,13 @@ function saveEditedComment(commentId, editedMessage) {
         .then((response) => response.json())
         .then((data) => {
             if (data.message) {
-                console.log("Comment saved successfully");
+                const successCommentClass = document.getElementsByClassName("successComment")[0];
+                successCommentClass.style.display = "block";
+                const successComment = document.getElementById("successComment");
+                successComment.innerHTML = "<strong>SUCCESS !!!</strong> Your comment has been saved successfully."
+
+                const deleteCommentClass = document.getElementsByClassName("deleteComment")[0];
+                deleteCommentClass.style.display = "none";
             } else if (data.error) {
                 console.error("Error:", data.error);
             }
@@ -705,11 +719,16 @@ function saveEditedComment(commentId, editedMessage) {
         .then((response) => response.json())
         .then((data) => {
             if (data.message) {
-                console.log("Yorum başarıyla silindi.");
-                
                 const commentElement = document.getElementById(`comment-${commentId}`);
                 if (commentElement) {
                     commentElement.parentElement.parentElement.remove();
+                    const deleteCommentClass = document.getElementsByClassName("deleteComment")[0];
+                    deleteCommentClass.style.display = "block";
+                    const deleteComment = document.getElementById("deleteComment");
+                    deleteComment.innerHTML = "<strong>DELETED !!!</strong> Your comment has been deleted successfully."
+
+                    const successCommentClass = document.getElementsByClassName("successComment")[0];
+                    successCommentClass.style.display = "none";
                 }
             } else if (data.error) {
                 console.error("Hata:", data.error);

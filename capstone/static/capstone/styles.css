@@ -1,6 +1,7 @@
 body {
     padding: 10px;
     background-color: rgba(0, 0, 0, 0.05);
+    user-select: none; 
 }
 
 .navbar {
@@ -141,7 +142,7 @@ footer {
   color: white;
   font-weight: bold;
   float: right;
-  font-size: 22px;
+  font-size: 30px;
   cursor: pointer;
   transition: 0.3s;
 }
@@ -149,6 +150,53 @@ footer {
 .closebtn:hover {
   color: black;
 }
+
+
+.successComment {
+    padding: 20px;
+    background-color: #28cb16;
+    color: white;
+    text-align: center;
+    font-size: 50px;
+  }
+  
+  .successCommentBtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+  }
+  
+  .successCommentBtn:hover {
+    color: black;
+  }
+
+  .deleteComment {
+    padding: 20px;
+    background-color: #ff0000;
+    color: white;
+    text-align: center;
+    font-size: 50px;
+  }
+  
+  .deleteCommentBtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+  }
+  
+  .deleteCommentBtn:hover {
+    color: black;
+  }
 
 #comment-list {
     list-style-type: none;
