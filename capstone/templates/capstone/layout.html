@@ -73,7 +73,9 @@
             </div>
           </nav>
           <br>
-
+          {% csrf_token %}
+          <button id="scrollTopButton" class="scroll-to-top-button"><i class="fa-solid fa-arrow-up fa-xl"></i></button>
+          <button id="scrollBottomButton" class="scroll-to-bottom-button"><i class="fa-solid fa-arrow-down fa-xl"></i></button>
           {% block body %}
           {% endblock %}
 

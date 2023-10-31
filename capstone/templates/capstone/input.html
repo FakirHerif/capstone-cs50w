@@ -234,9 +234,6 @@
     </li>
     {% endfor %}
 </ul>
-{% csrf_token %}
-<button id="scrollTopButton" class="scroll-to-top-button"><i class="fa-solid fa-arrow-up fa-xl"></i></button>
-<button id="scrollBottomButton" class="scroll-to-bottom-button"><i class="fa-solid fa-arrow-down fa-xl"></i></button>
 </div>
 
 
@@ -594,7 +591,7 @@
                 })
                 .then(response => {
                     if (response.ok) {
-                        const deletemsg = document.getElementsByClassName("alert")[0];
+                        const deletemsg = document.getElementsByClassName("alertMsg")[0];
                         deletemsg.style.display = "block";
                         notesContent.style.display ="none";
                         contentText.style.display = "block";
@@ -746,27 +743,6 @@ function saveEditedComment(commentId, editedMessage) {
         });
     }
     });
-
-const scrollTopButton = document.getElementById("scrollTopButton");
-
-scrollTopButton.addEventListener("click", function() {
-    event.preventDefault();
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-});
-
-const scrollBottomButton = document.getElementById("scrollBottomButton");
-
-
-scrollBottomButton.addEventListener("click", () => {
-    event.preventDefault();
-    window.scrollTo({
-    top: document.body.scrollHeight,
-    behavior: "smooth"
-  });
-});
 
 document.querySelectorAll('.emoji-option').forEach(function(emojiOption) {
     emojiOption.addEventListener('click', function() {
