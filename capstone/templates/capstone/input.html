@@ -47,11 +47,7 @@
                 <h5 id="alertMsg"><strong>DELETED !!!</strong> The note has been deleted successfully.</h5>
             </div>
             <div>
-                <div class="d-flex" style="align-items: center; 
-                text-align: center; 
-                display: flex;
-                justify-content: center;
-                margin-bottom: 20px;">
+                <div class="d-flex" id="inputTitle">
                     {% if input.category.categoryImage %}
                         <img src="{{ input.category.categoryImage.url }}" alt="{{ input.category.categoryName }}" style="width: 50px; height: 50px; margin-right: 10px;">
                     {% endif %}
@@ -97,15 +93,14 @@
                     </div>
                     {% else %}
                     <div class="alert alert-info">
-                        <strong>Info!</strong> You should <a href="{% url 'login' %}" class="alert-link">LOGIN</a> to view notes.
+                        You should <a href="{% url 'login' %}" class="alert-link">LOGIN</a> to view notes.
                     </div>
                     {% endif %}
                 </div>
                 <div id="siteFormContainer" style="display: none;">
                     <h3 style="font-family: 'Courier New', Courier, monospace; font-weight: bold;">Create New Site</h3>
-                    <div class="createNewSiteContainer">
                     {% if user.is_authenticated %}
-                        <form action="{% url 'add_site' input.id input.title|slugify %}"    id="siteForm" method="POST">
+                        <form action="{% url 'add_site' input.id input.title|slugify %}" id="siteForm" method="POST" class="createNewSiteContainer">
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="site_name">Site Name</label>
@@ -120,21 +115,19 @@
                             <button type="submit" class="btn btn-success"   id="addSiteButton" style="font-weight: bold;">Add</button>
                             <button type="button" class="btn btn-secondary"     id="cancelButton" style="font-weight: bold;">Cancel</button>
                         </form>
-                    </div>
                     {% else %}
                     <div class="alert alert-info">
-                        <strong>Info!</strong> You should <a href="{% url 'login' %}" class="alert-link">LOGIN</a> to create a new site.
+                        You should <a href="{% url 'login' %}" class="alert-link">LOGIN</a> to create a new site.
                     </div>
                     <form action="{% url 'add_site' input.id input.title|slugify %}" id="siteForm" method="POST"></form>
-                    <button type="button" class="btn btn-secondary" id="cancelButton">Cancel</button>
+                    <button type="button" class="btn btn-secondary" id="cancelButton" style="font-weight: bold;">Cancel</button>
                     {% endif %}
                 </div>
 
                 <div id="noteFormContainer" style="display: none;">
                     <h3 style="font-family: 'Courier New', Courier, monospace; font-weight: bold;">Create New Note</h3>  
                     {% if user.is_authenticated %}  
-                    <div class="createNewNoteContainer">     
-                    <form action="{% url 'add_note' input.id input.title|slugify %}" id="noteForm" method="POST">
+                    <form action="{% url 'add_note' input.id input.title|slugify %}" id="noteForm" method="POST" class="createNewNoteContainer">
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="note_title">Note Title</label>
@@ -149,13 +142,12 @@
                     <button type="submit" class="btn btn-success" id="addNoteButton"  style="font-weight: bold;">Add</button>
                     <button type="button" class="btn btn-secondary" id="cancelNoteButton" style="font-weight: bold;">Cancel</button>
                     </form>
-                    </div> 
                     {% else %}
                     <div class="alert alert-info">
-                        <strong>Info!</strong> You should <a href="{% url 'login' %}" class="alert-link">LOGIN</a> to create a new note.
+                        You should <a href="{% url 'login' %}" class="alert-link">LOGIN</a> to create a new note.
                     </div>
                     <form action="{% url 'add_note' input.id input.title|slugify %}" id="noteForm" method="POST">
-                    <button type="button" class="btn btn-secondary" id="cancelNoteButton">Cancel</button>
+                    <button type="button" class="btn btn-secondary" id="cancelNoteButton" style="font-weight: bold;">Cancel</button>
                     {% endif %}
                 </div>
             </div>
@@ -219,7 +211,7 @@
     </form>
 {% else %}
     <div class="alert alert-info">
-        <strong>Info!</strong> You should <a href="{% url 'login' %}" class="alert-link">LOGIN</a> to write comment.
+        You should <a href="{% url 'login' %}" class="alert-link">LOGIN</a> to write comment.
     </div>
 
 {% endif %}

@@ -5,17 +5,17 @@
 
     {% if user.is_authenticated %}
     <div class="formContainerCreate">
-        <form action="{% url 'create' %}" method="POST">
+        <form action="{% url 'create' %}" method="POST" id="myForm">
 
             {% csrf_token %}
             <div class="form-group" id="formCreate">
                 <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" name="title"     placeholder="Enter Title" style="font-weight: bold;">
+                <input type="text" class="form-control" id="title" name="title"     placeholder="Enter Title" style="font-weight: bold;" required>
             </div>
             <br>
             <div class="form-group">
                 <label for="content">Content</label>
-                <textarea name="content" id="content" class="form-control" cols="30" rows="10" placeholder="Enter Content" style="font-weight: bold;"></textarea>
+                <textarea name="content" id="content" class="form-control" cols="30" rows="10" placeholder="Enter Content" style="font-weight: bold;" required></textarea>
             </div>
             <br>
             <div class="form-group">
@@ -40,4 +40,17 @@
     </div>
 
     {% endif %}
+
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function (e) {
+            const titleInput = document.getElementById('title');
+    
+            const titleValue = titleInput.value.trim();
+    
+            if (titleValue.length > 30) {
+                e.preventDefault();
+                alert('Title must be 30 characters or less.');
+            }
+        });
+    </script>
 {% endblock %}
