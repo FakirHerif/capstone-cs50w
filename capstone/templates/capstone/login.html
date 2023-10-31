@@ -14,11 +14,11 @@
     <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
         <div class="form-group">
-            <input autofocus class="form-control" type="text" name="username" placeholder="Username" style="font-weight: bold;">
+            <input autofocus class="form-control" type="text" name="username" placeholder="Username" style="font-weight: bold;" required>
         </div>
         <br>
         <div class="form-group">
-            <input class="form-control" type="password" name="password" placeholder="Password" style="font-weight: bold;">
+            <input class="form-control" type="password" name="password" placeholder="Password" style="font-weight: bold;" required>
         </div>
         <br>
         <input class="btn btn-primary" type="submit" value="Login" style="font-weight: bold;">

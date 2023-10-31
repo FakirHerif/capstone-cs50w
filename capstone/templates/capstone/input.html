@@ -104,12 +104,12 @@
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="site_name">Site Name</label>
-                                <input type="text" class="form-control" id="site_name"  name="site_name" placeholder="Enter Site Name" style="font-weight: bold;">
+                                <input type="text" class="form-control" id="site_name"  name="site_name" placeholder="Enter Site Name" style="font-weight: bold;" required>
                             </div>
                             <br>
                             <div class="form-group">
                                 <label for="site_url">Site URL</label>
-                                <input type="text" class="form-control" id="site_url"   name="site_url" placeholder="Enter Site URL" style="font-weight: bold;">
+                                <input type="text" class="form-control" id="site_url"   name="site_url" placeholder="Enter Site URL" style="font-weight: bold;" required>
                             </div>
                             <br>
                             <button type="submit" class="btn btn-success"   id="addSiteButton" style="font-weight: bold;">Add</button>
@@ -131,12 +131,12 @@
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="note_title">Note Title</label>
-                        <input type="text" class="form-control" id="note_title"name="note_title" placeholder="Enter Note Title" style="font-weight: bold;">
+                        <input type="text" class="form-control" id="note_title"name="note_title" placeholder="Enter Note Title" style="font-weight: bold;" required>
                     </div>
                     <br>
                     <div class="form-group">
                         <label for="note_content">Note Content</label>
-                        <textarea class="form-control" name="note_content" id="note_content" placeholder="Enter Note Content" style="font-weight: bold;" cols="30" rows="10"></textarea>
+                        <textarea class="form-control" name="note_content" id="note_content" placeholder="Enter Note Content" style="font-weight: bold;" cols="30" rows="10" required></textarea>
                     </div>
                     <br>
                     <button type="submit" class="btn btn-success" id="addNoteButton"  style="font-weight: bold;">Add</button>
@@ -171,7 +171,7 @@
         {% csrf_token %}
         <label for="newComment">Add New Comment</label>
         <div class="form-group" id="add-comment-container">
-            <textarea type="text" name="newComment" placeholder="Add new comment" id="newComment"></textarea>
+            <textarea type="text" name="newComment" placeholder="Add new comment" id="newComment" required></textarea>
             <button type="submit" class="btn btn-warning" style="font-weight: bold;">Send</button>
         </div>
         <div id="emoji-container">
@@ -788,5 +788,16 @@ emojiOptions.forEach(emoji => {
         }, 100);
     });
 });
+
+document.getElementById('noteForm').addEventListener('submit', function (e) {
+            const noteTitleInput = document.getElementById('note_title');
+    
+            const noteTitleValue = noteTitleInput.value.trim();
+    
+            if (noteTitleValue.length > 17) {
+                e.preventDefault();
+                alert('Title must be 17 characters or less.');
+            }
+        });
 </script>
 {% endblock %}
