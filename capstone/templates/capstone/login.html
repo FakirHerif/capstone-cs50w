@@ -4,7 +4,7 @@
 
     <h2 style="font-family: 'Courier New', Courier, monospace;
     font-weight: bold;">Login</h2>
-
+<div class="containerLogin">
     {% if message %}
         <div class="alert alert-danger allWarnings">
             <strong>{{ message }}</strong>
@@ -14,18 +14,21 @@
     <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
         <div class="form-group">
-            <input autofocus class="form-control" type="text" name="username" placeholder="Username">
+            <input autofocus class="form-control" type="text" name="username" placeholder="Username" style="font-weight: bold;">
         </div>
+        <br>
         <div class="form-group">
-            <input class="form-control" type="password" name="password" placeholder="Password">
+            <input class="form-control" type="password" name="password" placeholder="Password" style="font-weight: bold;">
         </div>
+        <br>
         <input class="btn btn-primary" type="submit" value="Login">
     </form>
-
+</div>
 <br>
 
     <div class="alert alert-warning allWarnings">
         <strong>Don't have an account?</strong> Register <a href="{% url 'register' %}" class="alert-link">here</a>.
     </div>
+
 
 {% endblock %}

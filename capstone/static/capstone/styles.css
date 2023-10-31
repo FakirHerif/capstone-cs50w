@@ -392,3 +392,10 @@ footer {
     font-family: 'Courier New', Courier, monospace;
     font-weight: bold;
 }
+
+.containerLogin {
+    max-width: 400px;
+    padding: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
