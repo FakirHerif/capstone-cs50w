@@ -19,6 +19,10 @@
         <input class="btn btn-primary" type="submit" value="Login">
     </form>
 
-    Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+<br>
+
+    <div class="alert alert-danger">
+        <strong>Don't have an account?</strong> Register <a href="{% url 'register' %}" class="alert-link">here</a>.
+    </div>
 
 {% endblock %}

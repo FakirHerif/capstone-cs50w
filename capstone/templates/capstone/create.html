@@ -1,7 +1,7 @@
 {% extends "capstone/layout.html" %}
 
 {% block body %}
-    <h2>Create New Topic</h2>
+    <h2 style="font-family: 'Courier New', Courier, monospace; font-weight: bold;">Create New Topic</h2>
 
     {% if user.is_authenticated %}
     <form action="{% url 'create' %}" method="POST">
@@ -27,7 +27,13 @@
         <button type="submit" class="btn btn-success">Add</button>
     </form>    
     {% else %}
-    <p>You must <strong><a href="{% url 'login' %}">login</a></strong> to add a topic.</p>
-    <p>Don't have an account? <strong><a href="{% url 'register' %}">Register here.</a></strong></p>
+    <div class="alert alert-info">
+        <strong>Do you want to create a new topic?</strong> You should <a href="{% url 'login' %}" class="alert-link">LOGIN</a> create a new topic.
+    </div>
+
+    <div class="alert alert-danger">
+        <strong>Don't have an account?</strong> Register <a href="{% url 'register' %}" class="alert-link">here</a>.
+    </div>
+    
     {% endif %}
 {% endblock %}
