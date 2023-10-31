@@ -197,20 +197,23 @@ def delete_comment(request, comment_id):
         return JsonResponse({'error': 'Comment not found.'}, status=404)
 
 
-
 def displayBookmark(request):
-    currentUser = request.user
-    selected_category = request.GET.get('category')
-    if selected_category:
-        input = currentUser.inputBookmark.filter(category__categoryName=selected_category)
-    else:
-        input = currentUser.inputBookmark.all()
-    categories = Category.objects.all()
-    return render(request, "capstone/bookmark.html", {
+    if request.user.is_authenticated:
+        currentUser = request.user
+        selected_category = request.GET.get('category')
+        if selected_category:
+            input = currentUser.inputBookmark.filter(category__categoryName=selected_category)
+        else:
+            input = currentUser.inputBookmark.all()
+            categories = Category.objects.all()
+        return render(request, "capstone/bookmark.html", {
         "input": input,
         "categories": categories,
         "selected_category": selected_category
     })
+    else:
+        return HttpResponseRedirect(reverse("login"))
+
 
 def removeBookmark(request, id, slug):
     inputData = Input.objects.get(pk=id)
