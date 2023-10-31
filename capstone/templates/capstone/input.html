@@ -103,20 +103,24 @@
                 </div>
                 <div id="siteFormContainer" style="display: none;">
                     <h3 style="font-family: 'Courier New', Courier, monospace; font-weight: bold;">Create New Site</h3>
+                    <div class="createNewSiteContainer">
                     {% if user.is_authenticated %}
-                    <form action="{% url 'add_site' input.id input.title|slugify %}" id="siteForm" method="POST">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="site_name">Site Name</label>
-                            <input type="text" class="form-control" id="site_name" name="site_name" placeholder="Enter Site Name">
-                        </div>
-                        <div class="form-group">
-                            <label for="site_url">Site URL</label>
-                            <input type="text" class="form-control" id="site_url" name="site_url" placeholder="Enter Site URL">
-                        </div>
-                        <button type="submit" class="btn btn-success" id="addSiteButton">Add</button>
-                        <button type="button" class="btn btn-secondary" id="cancelButton">Cancel</button>
-                    </form>
+                        <form action="{% url 'add_site' input.id input.title|slugify %}"    id="siteForm" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="site_name">Site Name</label>
+                                <input type="text" class="form-control" id="site_name"  name="site_name" placeholder="Enter Site Name" style="font-weight: bold;">
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label for="site_url">Site URL</label>
+                                <input type="text" class="form-control" id="site_url"   name="site_url" placeholder="Enter Site URL" style="font-weight: bold;">
+                            </div>
+                            <br>
+                            <button type="submit" class="btn btn-success"   id="addSiteButton" style="font-weight: bold;">Add</button>
+                            <button type="button" class="btn btn-secondary"     id="cancelButton" style="font-weight: bold;">Cancel</button>
+                        </form>
+                    </div>
                     {% else %}
                     <div class="alert alert-info">
                         <strong>Info!</strong> You should <a href="{% url 'login' %}" class="alert-link">LOGIN</a> to create a new site.
@@ -128,20 +132,24 @@
 
                 <div id="noteFormContainer" style="display: none;">
                     <h3 style="font-family: 'Courier New', Courier, monospace; font-weight: bold;">Create New Note</h3>  
-                    {% if user.is_authenticated %}        
+                    {% if user.is_authenticated %}  
+                    <div class="createNewNoteContainer">     
                     <form action="{% url 'add_note' input.id input.title|slugify %}" id="noteForm" method="POST">
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="note_title">Note Title</label>
-                        <input type="text" class="form-control" id="note_title"name="note_title" placeholder="Enter Note Title">
+                        <input type="text" class="form-control" id="note_title"name="note_title" placeholder="Enter Note Title" style="font-weight: bold;">
                     </div>
+                    <br>
                     <div class="form-group">
                         <label for="note_content">Note Content</label>
-                        <input type="text" class="form-control" id="note_content"name="note_content" placeholder="Enter Note Content">
+                        <textarea class="form-control" name="note_content" id="note_content" placeholder="Enter Note Content" style="font-weight: bold;" cols="30" rows="10"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-success" id="addNoteButton">Add</button>
-                    <button type="button" class="btn btn-secondary" id="cancelNoteButton">Cancel</button>
+                    <br>
+                    <button type="submit" class="btn btn-success" id="addNoteButton"  style="font-weight: bold;">Add</button>
+                    <button type="button" class="btn btn-secondary" id="cancelNoteButton" style="font-weight: bold;">Cancel</button>
                     </form>
+                    </div> 
                     {% else %}
                     <div class="alert alert-info">
                         <strong>Info!</strong> You should <a href="{% url 'login' %}" class="alert-link">LOGIN</a> to create a new note.
