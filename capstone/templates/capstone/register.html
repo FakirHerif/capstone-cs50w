@@ -4,7 +4,7 @@
 
     <h2 style="font-family: 'Courier New', Courier, monospace;
     font-weight: bold;">Register</h2>
-
+<div class="containerRegister">
     {% if message %}
         <div class="alert alert-danger allWarnings">
             <strong>{{ message }}</strong>
@@ -14,20 +14,24 @@
     <form action="{% url 'register' %}" method="post">
         {% csrf_token %}
         <div class="form-group">
-            <input class="form-control" autofocus type="text" name="username" placeholder="Username">
+            <input class="form-control" autofocus type="text" name="username" placeholder="Username" style="font-weight: bold;">
         </div>
+        <br>
         <div class="form-group">
-            <input class="form-control" type="email" name="email" placeholder="Email Address">
+            <input class="form-control" type="email" name="email" placeholder="Email Address" style="font-weight: bold;">
         </div>
+        <br>
         <div class="form-group">
-            <input class="form-control" type="password" name="password" placeholder="Password">
+            <input class="form-control" type="password" name="password" placeholder="Password" style="font-weight: bold;">
         </div>
+        <br>
         <div class="form-group">
-            <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
+            <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password" style="font-weight: bold;">
         </div>
-        <input class="btn btn-primary" type="submit" value="Register">
+        <br>
+        <input class="btn btn-primary" type="submit" value="Register" style="font-weight: bold;">
     </form>
-
+</div>
     <br>
 
     <div class="alert alert-info allWarnings">
