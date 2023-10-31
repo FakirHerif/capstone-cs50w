@@ -128,18 +128,19 @@ def edit_note(request, note_id):
     except Note.DoesNotExist:
         return JsonResponse({'error': 'Note not found.'}, status=404)
 
-
+@login_required
 def addNote(request, id, slug):
     if request.method == "POST":
+        user = request.user
         note_title = request.POST.get("note_title")
         note_content = request.POST.get("note_content")
         input_data = get_object_or_404(Input, pk=id)
-        user = request.user
+        
         category = input_data.category
         new_note = Note(title=note_title, content=note_content, input=input_data, owner=user, category=category)
-        
         new_note.save()
-    return HttpResponseRedirect(reverse("input", args=(id, slug)))
+    else:
+        return HttpResponseRedirect(reverse("input", args=(id, slug)))
 
 
 

@@ -216,6 +216,7 @@
     </li>
     {% endfor %}
 </ul>
+{% csrf_token %}
 <button id="scrollTopButton" class="scroll-to-top-button"><i class="fa-solid fa-arrow-up fa-xl"></i></button>
 <button id="scrollBottomButton" class="scroll-to-bottom-button"><i class="fa-solid fa-arrow-down fa-xl"></i></button>
 </div>
@@ -720,6 +721,7 @@ function saveEditedComment(commentId, editedMessage) {
 const scrollTopButton = document.getElementById("scrollTopButton");
 
 scrollTopButton.addEventListener("click", function() {
+    event.preventDefault();
     window.scrollTo({
         top: 0,
         behavior: "smooth"
@@ -730,7 +732,8 @@ const scrollBottomButton = document.getElementById("scrollBottomButton");
 
 
 scrollBottomButton.addEventListener("click", () => {
-  window.scrollTo({
+    event.preventDefault();
+    window.scrollTo({
     top: document.body.scrollHeight,
     behavior: "smooth"
   });
