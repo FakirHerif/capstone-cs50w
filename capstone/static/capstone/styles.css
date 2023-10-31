@@ -440,3 +440,25 @@ footer {
     justify-content: center;
     margin-bottom: 20px;
 }
+
+@media only screen and (max-width: 1200px) {
+body {
+    padding: 50px;
+}
+
+.card {
+    width: 250px;
+    height: 300px;
+    margin: 5px;
+    margin-bottom: 50px;
+    margin-top: 20px;
+}
+
+.card img {
+    max-width: 50%;
+    height: auto;
+    display: block;
+    margin: 20px auto 0; 
+}
+  }
+

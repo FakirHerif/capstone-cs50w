@@ -493,7 +493,6 @@
 
                     const editButtons = document.getElementById("note_edit");
                     editButtons.addEventListener("click", function() {
-                        console.log("Edit button clicked !!! ");
                         toggleEditability(true);
                     });
 
@@ -547,7 +546,6 @@
                         const noteId = selectedNote.id;
                         const newTitle = notesContentTitle.textContent;
                         const newContent = notesContentContent.textContent;
-                        console.log("Save button clicked !!! ");
                         toggleEditability(false);
 
                         fetch(`/edit_note/${noteId}/`, {
@@ -563,10 +561,10 @@
                         .then(data => {
                             if (data.error) {
                                 console.error(data.error);
-                                console.log("HATA!!!!!");
+                                console.log("ERROR !!!!!");
                             } else {
                                 console.log(data.message);
-                                console.log("EDIT BAŞARILI !!!");
+                                console.log("EDIT Successful !!!");
                                 window.location.reload();
                             }
                         })
@@ -578,7 +576,6 @@
                     const deleteNoteButton = document.getElementById("note_delete");
 
                     deleteNoteButton.addEventListener("click", function () {
-                    console.log("Delete button clicked !!! ");
                     const noteId = selectedNote.id;
                     const noteOwner = selectedNote.owner;
                     const confirmed = confirm(`Are you sure you want to delete the note?`);
