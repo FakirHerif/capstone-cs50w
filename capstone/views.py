@@ -19,12 +19,13 @@ def index(request):
     })
 
 def search(request):
+    categories = Category.objects.all()
     query = request.GET.get('query')
     if query:
         results = Input.objects.filter(title__icontains=query)
     else:
         results = Input.objects.none()
-    return render(request, 'capstone/search_results.html', {'results': results, 'query': query})
+    return render(request, 'capstone/search_results.html', {'results': results, 'query': query, "categories": categories })
 
 
 def input(request, id, slug):
