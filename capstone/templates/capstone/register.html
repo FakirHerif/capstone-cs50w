@@ -2,10 +2,13 @@
 
 {% block body %}
 
-    <h2>Register</h2>
+    <h2 style="font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;">Register</h2>
 
     {% if message %}
-        <div>{{ message }}</div>
+        <div class="alert alert-danger allWarnings">
+            <strong>{{ message }}</strong>
+        </div>
     {% endif %}
 
     <form action="{% url 'register' %}" method="post">
@@ -27,7 +30,7 @@
 
     <br>
 
-    <div class="alert alert-info">
+    <div class="alert alert-info allWarnings">
         <strong>Already have an account? </strong>Login <a href="{% url 'login' %}" class="alert-link">here</a>.
     </div>
 

@@ -27,13 +27,13 @@
         <button type="submit" class="btn btn-success">Add</button>
     </form>    
     {% else %}
-    <div class="alert alert-info">
+    <div class="alert alert-info allWarnings">
         <strong>Do you want to create a new topic?</strong> You should <a href="{% url 'login' %}" class="alert-link">LOGIN</a> create a new topic.
     </div>
 
-    <div class="alert alert-danger">
+    <div class="alert alert-warning allWarnings">
         <strong>Don't have an account?</strong> Register <a href="{% url 'register' %}" class="alert-link">here</a>.
     </div>
-    
+
     {% endif %}
 {% endblock %}
