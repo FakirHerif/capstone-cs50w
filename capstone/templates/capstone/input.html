@@ -1,37 +1,20 @@
 {% extends "capstone/layout.html" %}
 
-{% block body %}
-
 {% block title %}
     FakirCode - {{ input.title }}
 {% endblock title %}
 
-<div class="row">
-    {% if user.is_authenticated %}
-        {% if isInputInBookmark %}
-            <form action="{% url 'removeBookmark' id=input.id slug=input.title|slugify %}" method="POST">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger">Remove Bookmark</button>
-            </form>
-        {% else %}
-            <form action="{% url 'addBookmark' id=input.id slug=input.title|slugify %}" method="POST">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-success">Add Bookmark</button>
-            </form>
-        {% endif %}
-    {% endif %}
-</div>
+{% block body %}
+<br>
 
-<button id="backButton" type="submit" class="btn btn-danger">BACK</button>
-
-
-<div class="container mb-5">
+<div id="inputBody" class="container mb-5">
     <div class="row mb-5">
         <aside class="col-sm-12 col-md-3 col-xl-2 mb-2 px-2">
             <div class="row mx-0">
                 <div class='col col-sm-4 col-md-12 mb-3 list-group list-group-flush'>
-                    <div class="d-flex justify-content-between align-items-baseline border-bottom border-warning">
-                        <h4><strong>FakirCode</strong></h4>
+                    <div class="d-flex justify-content-center align-items-baseline border-bottom border-warning">
+                        <img style="width: 150px; height: 150px;" src="/static/capstone/input.gif" alt="FakirCode">
+                        <br>
                     </div>
                 </div>
                 <div class='col col-sm-4 col-md-12 mb-3 list-group list-group-flush'>
@@ -70,11 +53,28 @@
                 justify-content: center;
                 margin-bottom: 20px;">
                     {% if input.category.categoryImage %}
-                        <img src="{{ input.category.categoryImage.url }}" alt="{{ input.category.categoryName }}" style="width: 50px; height: 50px;">
+                        <img src="{{ input.category.categoryImage.url }}" alt="{{ input.category.categoryName }}" style="width: 50px; height: 50px; margin-right: 10px;">
                     {% endif %}
-                    <h1 class="d-flex">{{ input.title }}</h1>
+                    <h1 class="d-flex" style="margin-right: 10px;">  •{{ input.title }}•</h1> 
+                    <div class="row">
+                        {% if user.is_authenticated %}
+                            {% if isInputInBookmark %}
+                                <form action="{% url 'removeBookmark' id=input.id slug=input.title|slugify %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger" style="font-weight: bold;">Remove Bookmark</button>
+                                </form>
+                            {% else %}
+                                <form action="{% url 'addBookmark' id=input.id slug=input.title|slugify %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success" style="font-weight: bold;">Add Bookmark</button>
+                                </form>
+                            {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
+                <br>
                 <p id="contentText">{{ input.content }}</p>
+                <br>
                 <div id="iframe"></div>
 
                 
@@ -88,9 +88,10 @@
                         </div>
                      
                         <div class="card-footer bg-light" id="noteButtons">
-                            <button id="note_edit" type="button" class="btn btn-sm btn-warning note_edit" data-note-id="{{ note.id }}" style="display: none;"><i class="far fa-edit"></i> edit</button>
-                            <button id="note_delete" type="button" class="btn btn-sm btn-danger note_delete" data-note-id="{{ note.id }}" style="display: none;"><i class="far fa-trash-alt"></i> delete</button>
-                            <button id="note_save" type="button" class="btn btn-sm btn-success note_save" data-note-id="{{ note.id }}" style="display: none;"><i class="far fa-save"></i> save</button>`
+                            <button id="note_edit" type="button" class="btn btn-sm btn-warning note_edit" data-note-id="{{ note.id }}" style="display: none;"><i class="far fa-edit"></i> Edit</button>
+                            <button id="note_delete" type="button" class="btn btn-sm btn-danger note_delete" data-note-id="{{ note.id }}" style="display: none;"><i class="far fa-trash-alt"></i> Delete</button>
+                            <button id="note_save" type="button" class="btn btn-sm btn-success note_save" data-note-id="{{ note.id }}" style="display: none;"><i class="far fa-save"></i> Save</button>
+                            <button id="note_cancel" type="button" class="btn btn-sm btn-secondary" data-note-id="{{ note.id }}"><i class="far fa-xmark" style="display: none;"></i> Cancel</button>
                         </div>
                        
                     </div>
@@ -156,7 +157,7 @@
         <label for="newComment">Add New Comment</label>
         <div class="form-group" id="add-comment-container">
             <textarea type="text" name="newComment" placeholder="Add new comment" id="newComment"></textarea>
-            <button type="submit" class="btn btn-warning">Add</button>
+            <button type="submit" class="btn btn-warning" style="font-weight: bold;">Send</button>
         </div>
         <div id="emoji-container">
             <div class="emoji-box">
@@ -200,7 +201,9 @@
     <li class="list-group-item">
         <div class="comment-container">
             <p><strong>Comment: </strong><p>
-            <p class="comment-message" id="comment-{{ comment.id }}"><span>{{ comment.message }}</span></p>
+            <div class="commentBoxCs">
+                <p class="comment-message" id="comment-{{ comment.id }}"><span>{{ comment.message }}</span></p>
+            </div>    
             <p>Posted by <strong style="color: red;">{{ comment.author }}</strong> on {{ comment.date_posted }}</p>
             {% if user.is_authenticated %}
                 {% if user.username == comment.author.username %}
@@ -443,15 +446,17 @@
                         const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' };
                         const formattedDate = datePosted.toLocaleDateString('en-US', options);
 
-                        notesContentOwner.innerHTML = `Posted by <strong>${selectedNote.owner}</strong> on ${formattedDate}`;
+                        notesContentOwner.innerHTML = `Posted by <strong style="color: red;">${selectedNote.owner}</strong> on ${formattedDate}`;
                     }
                     if (notesContentButtons) {
                         notesContentButtons.innerHTML = `
-                        <button id="note_edit" type="button" class="btn btn-sm btn-warning" data-note-id="{{ note.id }}" style="color: white;"><i class="far fa-edit"></i> edit ${selectedNote.id}</button>
+                        <button id="note_edit" type="button" class="btn btn-sm btn-warning" data-note-id="{{ note.id }}" style="color: white;"><i class="far fa-edit"></i> Edit ${selectedNote.id}</button>
                         
-                        <button id="note_delete" type="button" class="btn btn-sm btn-danger" data-note-id="{{ note.id }}"><i class="far fa-trash-alt"></i> delete ${selectedNote.id}</button>
+                        <button id="note_delete" type="button" class="btn btn-sm btn-danger" data-note-id="{{ note.id }}"><i class="far fa-trash-alt"></i> Delete ${selectedNote.id}</button>
                         
-                        <button id="note_save" type="button" class="btn btn-sm btn-success" data-note-id="{{ note.id }}"><i class="far fa-save"></i> Save ${selectedNote.id}</button>`;
+                        <button id="note_save" type="button" class="btn btn-sm btn-success" data-note-id="{{ note.id }}"><i class="far fa-save"></i> Save ${selectedNote.id}</button>
+                        
+                        <button id="note_cancel" type="button" class="btn btn-sm btn-secondary" data-note-id="{{ note.id }}"><i class="far fa-xmark"></i> Cancel ${selectedNote.id}</button>`
                     }
 
                     const noteOwner = `${selectedNote.owner}`;
@@ -459,12 +464,14 @@
                     const editButton = document.getElementById("note_edit");
                     const deleteButton = document.getElementById("note_delete");
                     const saveButton = document.getElementById("note_save");
+                    const cancelButton = document.getElementById("note_cancel");
 
             
                     if (noteOwner != authenticatedUser) {
                     editButton.style.display = "none";
                     deleteButton.style.display = "none";
                     saveButton.style.display = "none";
+                    cancelButton.style.display = "none";
                     }
 
                     noteElement = event.target;
@@ -493,6 +500,30 @@
                         }
                     }
                    
+                    const cancelNoteButton = document.getElementById("note_cancel");
+
+                    cancelNoteButton.addEventListener("click", function () {
+                        toggleEditability(false);
+                    });
+
+                    function toggleEditability(editMode) {
+                        if (editMode) {
+                            notesContentTitle.contentEditable = "true";
+                            notesContentContent.contentEditable = "true";
+                            notesContentTitle.style.border = "2px solid #ccc";
+                            notesContentContent.style.border = "2px solid #ccc";
+                            notesContentTitle.style.backgroundColor = "#fff";
+                            notesContentContent.style.backgroundColor = "#fff";
+                        } else {
+                            notesContentTitle.contentEditable = "false";
+                            notesContentContent.contentEditable = "false";
+                            notesContentTitle.style.border = "none";
+                            notesContentContent.style.border = "none";
+                            notesContentTitle.style.backgroundColor = "transparent";
+                            notesContentContent.style.backgroundColor = "transparent";
+                        }
+                    }
+
                     const saveButtons = document.getElementById("note_save");
                         
                     var csrftoken = "{{ csrf_token }}";
@@ -687,12 +718,6 @@ function saveEditedComment(commentId, editedMessage) {
     }
     });
 
-const backButton = document.getElementById("backButton");
-
-backButton.addEventListener("click", function() {
-    window.history.back();
-});
-
 const scrollTopButton = document.getElementById("scrollTopButton");
 
 scrollTopButton.addEventListener("click", function() {
@@ -725,10 +750,8 @@ const emojiOptions = document.querySelectorAll('.emoji-option');
 
 emojiOptions.forEach(emoji => {
     emoji.addEventListener('click', () => {
-        // Tıkladığınızda küçültme efekti ekleyin
         emoji.style.transform = 'scale(0.9)';
         
-        // 0.1 saniye sonra efekti kaldırın
         setTimeout(() => {
             emoji.style.transform = 'scale(1)';
         }, 100);

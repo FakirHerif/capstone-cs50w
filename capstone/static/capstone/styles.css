@@ -303,6 +303,21 @@ footer {
 }
 
 .comment-message {
-    word-wrap: break-word; /* Kelimeleri kır */
-    white-space: pre-wrap; /* Boşlukları koru */
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+#inputBody {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+.d-flex {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+.commentBoxCs{
+    margin: 10px;
+    font-size: 20px;
 }
