@@ -31,7 +31,7 @@ def input(request, id, slug):
     inputData = Input.objects.get(pk=id)
     categories = Category.objects.all()
     isInputInBookmark = request.user in inputData.bookmark.all()
-    allComments = Comment.objects.filter(input=inputData)
+    allComments = Comment.objects.filter(input=inputData).order_by('-date_posted')
     allNotes = Note.objects.filter(input=inputData)
     return render(request, "capstone/input.html", {
         "input": inputData,
@@ -74,7 +74,7 @@ def get_notes(request, id):
 
 def get_comments(request, id):
     input_data = get_object_or_404(Input, pk=id)
-    comments = Comment.objects.filter(input=input_data)
+    comments = Comment.objects.filter(input=input_data).order_by('-date_posted')
     data = {
         "comments": [
             {

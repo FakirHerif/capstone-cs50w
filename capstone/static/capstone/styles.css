@@ -235,7 +235,7 @@ footer {
 
 .scroll-to-top-button {
   position: fixed;
-  bottom: 20px; 
+  bottom: 70px; 
   right: 20px; 
   background-color: #007bff;
   color: #fff; 
@@ -243,6 +243,7 @@ footer {
   padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
+  text-align: center;
 }
 
 .scroll-to-top-button:hover {
@@ -251,7 +252,7 @@ footer {
 
 .scroll-to-bottom-button {
     position: fixed;
-    bottom: 70px;
+    bottom: 20px;
     right: 20px;
     z-index: 9998;
     background-color: #007bff;
@@ -260,6 +261,7 @@ footer {
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
+    text-align: center;
   }
 
   .scroll-to-bottom-button:hover {
