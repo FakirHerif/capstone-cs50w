@@ -6,12 +6,6 @@ A quick overview of the final assignment(CS50W Final Project) of CS50 Web Progra
 
 A short video where I go through the required specifications of the project: https://youtu.be/wxFuMxjSM1k
 
-# Images from the project
-
-![view1](siteView/view.jpg){ width=500px height=500px }
-![view2](siteView/view2.jpg){ width=500px height=500px }
-![view3](siteView/view3.jpg){ width=500px height=500px }
-
 # Getting Started
 
 - pip install Django
@@ -75,3 +69,18 @@ A short video where I go through the required specifications of the project: htt
 - register: Handles user registration. Users can create new accounts by providing a username, email, and password.
 
 These functions and models provide the core functionality for this project, allowing users to organize, comment on, and bookmark coding-related content.
+
+# Images from the project
+
+![view1](siteView/view.jpg)
+
+------------------------------------------------------------------------
+
+![view2](siteView/view2.jpg)
+
+------------------------------------------------------------------------
+
+![view3](siteView/view3.jpg)
+
+------------------------------------------------------------------------
+<img src="siteView/view3.jpg" width="400" height="400">
