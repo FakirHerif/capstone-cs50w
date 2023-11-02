@@ -72,15 +72,12 @@ These functions and models provide the core functionality for this project, allo
 
 # Images from the project
 
-![view1](siteView/view.jpg)
+<img src="siteView/view1.jpg" width="500" height="500">
 
 ------------------------------------------------------------------------
 
-![view2](siteView/view2.jpg)
+<img src="siteView/view3.jpg" width="500" height="500">
 
 ------------------------------------------------------------------------
 
-![view3](siteView/view3.jpg)
-
-------------------------------------------------------------------------
-<img src="siteView/view3.jpg" width="400" height="400">
+<img src="siteView/view2.jpg" width="500" height="500">
