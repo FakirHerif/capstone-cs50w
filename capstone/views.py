@@ -201,11 +201,12 @@ def displayBookmark(request):
     if request.user.is_authenticated:
         currentUser = request.user
         selected_category = request.GET.get('category')
+        categories = Category.objects.all()
+
         if selected_category:
             input = currentUser.inputBookmark.filter(category__categoryName=selected_category)
         else:
             input = currentUser.inputBookmark.all()
-            categories = Category.objects.all()
         return render(request, "capstone/bookmark.html", {
         "input": input,
         "categories": categories,
