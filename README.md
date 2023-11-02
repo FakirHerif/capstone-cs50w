@@ -72,7 +72,7 @@ These functions and models provide the core functionality for this project, allo
 
 # Images from the project
 
-<img src="siteView/view1.jpg" width="500" height="500">
+<img src="siteView/view.jpg" width="500" height="500">
 
 ------------------------------------------------------------------------
 
