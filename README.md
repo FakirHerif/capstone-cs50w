@@ -8,6 +8,10 @@ A short video where I go through the required specifications of the project: htt
 
 # Images from the project
 
+![view1](siteView/view.jpg){ width=500px height=500px }
+![view2](siteView/view2.jpg){ width=500px height=500px }
+![view3](siteView/view3.jpg){ width=500px height=500px }
+
 # Getting Started
 
 - pip install Django
